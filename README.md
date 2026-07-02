@@ -2,7 +2,7 @@
 
 Éditeur de *lead sheet* (grille d'accords + paroles + rythme pour guitaristes) à fichier unique, hors-ligne, pensé pour le mobile. Livré préchargé avec la chanson **Aziza**, mais le moteur accepte n'importe quel flux.
 
-**En ligne** : ouvrir `decoupe_mesures_aziza.html` dans un navigateur — aucune installation. Si hébergé sur GitHub Pages : `<VOTRE_URL_GITHUB_PAGES>`.
+**En ligne** : ouvrir `decoupe_mesures_aziza.html` dans un navigateur — aucune installation. Si hébergé sur GitHub Pages : `https://nmulongo-sys.github.io/leadsheetproject/`.
 **Statut** : révision 2026-07-02 • fichier HTML unique, sans dépendance externe, fonctionne hors ligne et sur Android.
 
 ## Utilisation
