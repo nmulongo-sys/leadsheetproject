@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lead sheet Aziza — flux · grille · accords</title>
+<style>
+  :root{
+    --paper:#ece3cf; --paper-2:#e4d8be; --panel:#f2ead8;
+    --ink:#3b2f21; --ink-soft:#6f5d45;
+    --pencil:#b2392c; --pencil-soft:#cd6b59; --charcoal:#2a2724;
+    --line:#cdbb98; --line-soft:#dccaa6;
+    --serif: Georgia, "Times New Roman", serif;
+    --display: "Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+    --mono: "Courier New", ui-monospace, monospace;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  body{
+    background:
+      repeating-linear-gradient(180deg, transparent 0, transparent 33px, rgba(120,95,60,.045) 33px, rgba(120,95,60,.045) 34px),
+      radial-gradient(120% 80% at 50% -10%, var(--paper-2), var(--paper) 60%);
+    color:var(--ink); font-family:var(--serif); -webkit-text-size-adjust:100%; line-height:1.5; min-height:100vh;
+  }
+  .wrap{ max-width:880px; margin:0 auto; padding:18px 16px 80px; }
+
+  header{ padding:6px 2px 12px; }
+  h1{ font-family:var(--display); font-weight:600; font-size:1.45rem; letter-spacing:.01em; margin:0; color:var(--charcoal); }
+  h1 .sub{ display:block; font-family:var(--mono); font-size:.72rem; font-weight:400; letter-spacing:.04em; color:var(--ink-soft); margin-top:5px; text-transform:uppercase; }
+  .howto{ font-size:.9rem; color:var(--ink-soft); margin:11px 2px 0; max-width:66ch; }
+  .howto b{ color:var(--ink); font-weight:600; }
+  .howto .mk{ color:var(--pencil); font-weight:700; }
+  .howto + .howto{ margin-top:6px; }
+
+  .toolbar{ position:sticky; top:0; z-index:6; display:flex; gap:10px; padding:12px 0; margin:14px 0 4px;
+    background:linear-gradient(180deg, var(--paper) 72%, rgba(236,227,207,0)); }
+  button{ font-family:var(--display); font-size:1rem; cursor:pointer; border-radius:5px; min-height:48px; padding:0 16px;
+    border:1.5px solid var(--ink-soft); background:var(--panel); color:var(--ink);
+    transition:transform .06s ease, background .15s ease; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  button:active{ transform:translateY(1px); }
+  .btn-bar{ flex:1; }
+  .btn-primary{ border-color:var(--pencil); background:var(--pencil); color:#f7efe0; font-weight:600; }
+  .btn-primary .glyph{ font-weight:700; margin-right:4px; }
+  .btn-ghost{ background:transparent; }
+
+  .label-row{ display:flex; align-items:baseline; justify-content:space-between; margin:14px 2px 6px; }
+  .pane-label{ font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); }
+  .pane-label .em{ color:var(--pencil); }
+  #flux{ width:100%; min-height:170px; resize:vertical; font-family:var(--serif); font-size:17px; line-height:1.75;
+    color:var(--ink); background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px;
+    box-shadow:inset 0 1px 3px rgba(80,60,35,.08); }
+  #flux:focus{ outline:2px solid var(--pencil-soft); outline-offset:1px; }
+  .counter{ font-family:var(--mono); font-size:.85rem; color:var(--ink-soft); margin:8px 2px 0; }
+  .counter b{ color:var(--pencil); font-size:1.05rem; }
+
+  .grid-head{ border-top:1px solid var(--line); margin:22px 0 10px; padding-top:14px; }
+  .ctrl{ display:flex; flex-wrap:wrap; gap:16px 22px; align-items:flex-end; margin:0 2px 14px; }
+  .ctrl-grp{ display:flex; flex-direction:column; gap:5px; }
+  .ctrl-lbl{ font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
+  .seg{ display:inline-flex; border:1.5px solid var(--line); border-radius:6px; overflow:hidden; }
+  .seg button{ min-height:40px; padding:0 13px; border:0; border-radius:0; background:transparent; font-family:var(--display); font-size:.92rem; color:var(--ink-soft); border-left:1px solid var(--line); }
+  .seg button:first-child{ border-left:0; }
+  .seg button.on{ background:var(--charcoal); color:var(--paper); font-weight:600; }
+  #segAccid button{ font-size:1.05rem; min-width:42px; }
+  .stepper{ display:inline-flex; align-items:stretch; border:1.5px solid var(--line); border-radius:6px; overflow:hidden; }
+  .stepper button{ min-height:40px; min-width:42px; padding:0; border:0; border-radius:0; background:transparent; font-size:1.3rem; color:var(--ink); }
+  .stepper #capoVal{ display:inline-flex; align-items:center; justify-content:center; min-width:46px; font-family:var(--mono); font-size:1rem; font-weight:700; color:var(--pencil); border-left:1px solid var(--line); border-right:1px solid var(--line); }
+
+  #grille{ margin-top:2px; }
+  .section{ margin:10px 0 18px; }
+  .sec-head{ display:flex; align-items:baseline; gap:10px; margin:0 0 3px 2px; }
+  .sec-head h3{ font-family:var(--display); font-weight:600; font-size:1.04rem; color:var(--ink); margin:0; }
+  .sec-head .count{ font-family:var(--mono); font-size:.72rem; color:var(--ink-soft); letter-spacing:.03em; }
+  .sec-ref{ font-family:var(--mono); font-size:.74rem; color:var(--ink-soft); margin:0 2px 8px; }
+  .sec-ref b{ color:var(--pencil); font-weight:700; }
+
+  .measures-row{ display:flex; flex-wrap:wrap; align-items:stretch; gap:0; }
+  .barline{ width:3px; align-self:stretch; min-height:2.4em; margin:0 7px; border-radius:2px;
+    background:linear-gradient(180deg,var(--pencil),var(--pencil-soft) 45%,var(--pencil)); box-shadow:0 0 1px rgba(178,57,44,.55); transform:rotate(.6deg); flex:0 0 auto; }
+  .barline.section-start{ width:7px; margin:0 9px 0 0; background:none; border-left:3px solid var(--charcoal); border-right:2px solid var(--charcoal); transform:none; box-shadow:none; opacity:.7; }
+
+  .cell{ flex:1 1 156px; min-width:124px; background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:8px 9px 10px; margin:4px 0; display:flex; flex-direction:column; gap:6px; }
+  .cell-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:6px; }
+  .cell-top-l{ display:flex; align-items:center; gap:8px; flex:1 1 auto; min-width:0; flex-wrap:wrap; }
+  .cell .idx{ font-family:var(--mono); font-size:.7rem; font-weight:700; color:var(--pencil); letter-spacing:.06em; }
+  .cell .frag{ font-family:var(--serif); font-size:1.02rem; color:var(--ink); word-break:break-word; }
+  .cell.tacet{ border-style:dashed; background:transparent; flex:0 1 134px; }
+  .cell.tacet .idx{ color:var(--ink-soft); }
+  .cell.tacet .frag{ color:var(--ink-soft); font-style:italic; font-size:.88rem; display:flex; align-items:center; gap:6px; }
+  .cell.tacet .frag::before{ content:"𝄽"; font-style:normal; font-size:1.1rem; line-height:1; color:var(--ink-soft); }
+
+  .del{ min-height:28px; min-width:30px; padding:0 6px; font-size:.8rem; line-height:1; border:1px solid var(--line); border-radius:5px; background:transparent; color:var(--ink-soft); flex:0 0 auto; }
+  .del:hover{ color:var(--pencil); border-color:var(--pencil-soft); }
+
+  .chord-chip{ min-height:30px; padding:2px 8px; border-radius:4px; border:1px solid var(--line); background:#f7efdd; font-family:var(--display); color:var(--charcoal); line-height:1.15; display:inline-flex; flex-direction:row; align-items:stretch; cursor:pointer; }
+  .chord-chip.empty{ color:var(--ink-soft); font-style:italic; font-size:.82rem; border-style:dashed; background:transparent; }
+  .ch-col{ display:flex; flex-direction:column; align-items:flex-start; padding:0 4px; }
+  .ch-col:first-child{ padding-left:0; }
+  .ch-div{ width:1px; background:var(--pencil-soft); margin:1px 3px; align-self:stretch; opacity:.6; }
+  .ch-reel{ font-weight:600; font-size:.96rem; }
+  .ch-shape{ font-family:var(--mono); font-size:.68rem; color:var(--pencil-soft); }
+  .ch-beat{ font-family:var(--mono); font-size:.58rem; color:var(--ink-soft); }
+
+  .chord-edit{ display:flex; flex-direction:column; gap:7px; width:100%; }
+  .chord-input{ font-family:var(--display); font-size:1rem; padding:7px 9px; border:1.5px solid var(--pencil-soft); border-radius:5px; background:#fff; color:var(--ink); width:100%; }
+  .chord-input:focus{ outline:2px solid var(--pencil-soft); outline-offset:1px; }
+  .chord-picks{ display:flex; flex-wrap:wrap; gap:5px; }
+  .pick{ min-height:34px; padding:0 10px; font-size:.9rem; font-family:var(--display); border:1px solid var(--line); border-radius:5px; background:var(--panel); color:var(--ink); }
+  .pick.add{ border-color:var(--charcoal); color:var(--charcoal); font-weight:600; }
+  .pick.add.armed{ background:var(--charcoal); color:var(--paper); }
+  .pick.ok{ border-color:var(--pencil); background:var(--pencil); color:#f7efe0; font-weight:600; }
+  .pick.clr{ color:var(--ink-soft); }
+
+  .footer-actions{ display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid var(--line); margin-top:26px; padding-top:18px; }
+  .footer-actions button{ flex:1 1 auto; min-height:46px; font-size:.92rem; }
+  .legend{ font-size:.8rem; color:var(--ink-soft); margin:18px 2px 0; line-height:1.6; }
+  .legend .mk{ color:var(--pencil); font-weight:700; }
+  .legend b{ color:var(--ink); }
+
+  /* ÉTAGE 3 — voie rythmique */
+  .rhy{ margin-top:3px; border-top:1px dashed var(--line); padding-top:6px; cursor:pointer; display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; }
+  .rhy:hover{ background:rgba(178,57,44,.05); }
+  .rhy-arrows{ font-family:var(--mono); font-size:1.02rem; letter-spacing:.05em; color:var(--ink); line-height:1.25; }
+  .rhy.def .rhy-arrows{ color:var(--ink-soft); }
+  .rhy-tag{ font-family:var(--mono); font-size:.62rem; color:var(--ink-soft); letter-spacing:.03em; }
+  .rhy .v, .rhy-arrows .v, .fig-pick .v, .rhy-edit .v{ color:var(--ink-soft); }
+
+  .rhy-edit{ margin-top:6px; border-top:1px dashed var(--pencil-soft); padding-top:8px; display:flex; flex-direction:column; gap:8px; }
+  .rhy-edit-head{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+  .rhy-edit-t{ font-family:var(--mono); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--pencil); }
+  .rhy-fill{ font-family:var(--mono); font-size:.7rem; color:var(--ink-soft); }
+  .rhy-fill.ok{ color:var(--pencil); font-weight:700; }
+  .rhy-seq{ display:flex; flex-wrap:wrap; gap:6px; }
+  .rhy-empty{ color:var(--ink-soft); font-style:italic; font-size:.82rem; }
+  .rhy-chipE{ display:flex; align-items:center; gap:5px; border:1px solid var(--line); border-radius:5px; padding:3px 6px; background:#f7efdd; }
+  .rhy-chipE-stave{ width:34px; flex:0 0 auto; }
+  .rhy-chipE-nm{ font-family:var(--display); font-size:.8rem; color:var(--charcoal); white-space:nowrap; }
+  .rhy-x{ min-height:24px; min-width:24px; padding:0 4px; font-size:.72rem; line-height:1; border:1px solid var(--line); border-radius:4px; background:transparent; color:var(--ink-soft); }
+  .rhy-x:hover{ color:var(--pencil); border-color:var(--pencil-soft); }
+  .rhy-acts{ display:flex; flex-wrap:wrap; gap:6px; }
+  .fig-lib{ border:1px solid var(--line); border-radius:6px; background:var(--panel); padding:8px 8px 4px; max-height:280px; overflow:auto; -webkit-overflow-scrolling:touch; }
+  .fig-lib-h{ font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px; }
+  .fig-sec{ font-family:var(--display); font-weight:600; font-size:.82rem; color:var(--ink); margin:9px 0 4px; }
+  .fig-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:6px; margin-bottom:4px; }
+  .fig-pick{ display:flex; align-items:center; gap:7px; text-align:left; min-height:46px; padding:4px 7px; border:1px solid var(--line); border-radius:5px; background:#fbf8f1; }
+  .fig-pick:active{ transform:translateY(1px); border-color:var(--pencil-soft); }
+  .fig-pick-stave{ width:42px; flex:0 0 auto; }
+  .fig-pick-lab{ display:flex; flex-direction:column; line-height:1.12; min-width:0; }
+  .fig-pick-lab b{ font-family:var(--display); font-weight:600; font-size:.8rem; color:var(--charcoal); }
+  .fig-pick-lab span{ font-family:var(--mono); font-size:.82rem; color:var(--ink); }
+
+  /* MODULE IMPRESSION */
+  .pp{ display:none; }
+  .pp.open{ display:block; margin:18px 0; border:1px solid var(--line); border-radius:10px; background:var(--panel); padding:14px; }
+  .pp-bar{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .pp-title{ font-family:var(--display); font-weight:600; font-size:1rem; color:var(--charcoal); margin-right:auto; }
+  .pp-opts{ display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin-bottom:14px; padding-bottom:12px; border-bottom:1px dashed var(--line); }
+  .pp-opts label{ display:inline-flex; align-items:center; gap:6px; font-size:.85rem; color:var(--ink); cursor:pointer; }
+  .pp-opts input[type=checkbox]{ width:16px; height:16px; accent-color:var(--pencil); }
+  .pp-dense{ display:inline-flex; align-items:center; gap:6px; font-size:.85rem; color:var(--ink); }
+  .pp-dense select{ font:inherit; padding:2px 6px; border:1px solid var(--line); border-radius:5px; background:var(--paper); color:var(--ink); }
+  .sheet{ background:#fff; color:#000; padding:8mm; border:1px solid var(--line); border-radius:6px; font-family:var(--display); }
+  .sheet-head{ text-align:center; margin-bottom:12px; border-bottom:2px solid #000; padding-bottom:8px; }
+  .sheet-title{ font-size:1.7rem; font-weight:700; letter-spacing:.01em; }
+  .sheet-sub{ font-family:var(--mono); font-size:.76rem; color:#444; margin-top:4px; }
+  .sheet-section{ margin:12px 0; }
+  .sheet-sech{ font-weight:700; font-size:1.02rem; margin:0 0 6px; padding-bottom:2px; border-bottom:1px solid #bbb; }
+  .sheet-bars{ display:flex; flex-wrap:wrap; }
+  .sheet-bars.grid{ display:grid; }
+  .bar{ flex:1 1 220px; min-width:150px; padding:5px 12px 7px; border-left:2px solid #000; }
+  .bar-n{ font-family:var(--mono); font-size:.58rem; color:#999; display:block; line-height:1; }
+  .bar-ch{ font-weight:700; font-size:1.04rem; line-height:1.25; }
+  .bar-ch .ch-r{ font-weight:400; font-size:.8rem; color:#666; margin-left:6px; }
+  .bar-rhy{ font-family:var(--mono); font-size:.92rem; letter-spacing:.05em; color:#222; line-height:1.3; }
+  .bar-rhy .v{ color:#aaa; }
+  .bar-lyr{ font-size:.9rem; color:#000; line-height:1.32; margin-top:2px; }
+  .bar.sil .bar-lyr{ color:#888; font-style:italic; }
+
+  @media print{
+    @page{ margin:14mm; }
+    body{ background:#fff; margin:0; }
+    .wrap{ max-width:none; margin:0; padding:0; }
+    .wrap > *{ display:none !important; }
+    .wrap > #printPanel{ display:block !important; margin:0; padding:0; border:none; background:#fff; }
+    #printPanel .pp-bar, #printPanel .pp-opts{ display:none !important; }
+    .sheet{ border:none; border-radius:0; padding:0; }
+    .sheet-section{ break-inside:auto; }
+    .sheet-sech{ break-after:avoid; page-break-after:avoid; }
+    .bar{ break-inside:avoid; page-break-inside:avoid; }
+    .sheet.brk .sheet-section{ break-before:page; page-break-before:always; }
+    .sheet.brk .sheet-section:first-of-type{ break-before:auto; page-break-before:auto; }
+  }
+
+  @media (max-width:520px){ h1{ font-size:1.25rem; } .toolbar{ gap:8px; } .btn-bar{ padding:0 8px; font-size:.95rem; } .ctrl{ gap:12px 16px; } .fig-grid{ grid-template-columns:1fr 1fr; } .pp-opts{ gap:8px 12px; } .sheet{ padding:6mm; } .bar{ flex-basis:140px; } }
+  @media (prefers-reduced-motion:reduce){ button{ transition:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Lead sheet Aziza <span class="sub">flux → grille → accords</span></h1>
+    <p class="howto">
+      <b>Découper</b> : curseur dans le flux, puis <span class="mk">│</span> pose une barre (au caractère près).
+      Section = barre double <span style="color:var(--charcoal)">‖</span> auto. Cellule en pointillés = <b>silence de la voix</b>.
+      <b>✕</b> sur une cellule supprime la mesure ; <i>Retirer la barre</i> fusionne (garde le texte).
+    </p>
+    <p class="howto">
+      <b>Accords</b> : tape sur une mesure pour poser son accord (stocké comme <b>réel</b> ; la forme capo en découle).
+      Bouton <b>+ accord</b> pour en mettre deux dans une mesure (partage égal, ou <span class="mk">Dm:1 La:3</span> pour les temps).
+      L'accord est écrit dans le flux (<span class="mk">{Dm}</span>) : il suit sa mesure même si tu recoupes.
+    </p>
+  </header>
+
+  <div class="toolbar">
+    <button id="btnInsert" class="btn-bar btn-primary"><span class="glyph">│</span>Poser une barre</button>
+    <button id="btnRemove" class="btn-bar btn-ghost">⌫ Retirer la barre</button>
+  </div>
+
+  <div class="label-row"><span class="pane-label">le flux <span class="em">— accords + paroles, barres</span></span></div>
+  <textarea id="flux" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+  <div class="counter"><b id="count">0</b> mesures · <span id="secount">0</span> sections · <span id="sil">0</span> silence(s) voix · <span id="nch">0</span> accord(s)</div>
+
+  <div class="grid-head"><span class="pane-label">la grille <span class="em">— accords + paroles</span></span></div>
+
+  <div class="ctrl">
+    <div class="ctrl-grp">
+      <span class="ctrl-lbl">Affichage</span>
+      <div class="seg" id="segDisp">
+        <button data-mode="reel" class="on">Réel</button>
+        <button data-mode="capo">Capo</button>
+        <button data-mode="deux">Les deux</button>
+      </div>
+    </div>
+    <div class="ctrl-grp">
+      <span class="ctrl-lbl">Capo</span>
+      <div class="stepper">
+        <button id="capoMinus" aria-label="Capo moins">−</button>
+        <span id="capoVal">5</span>
+        <button id="capoPlus" aria-label="Capo plus">+</button>
+      </div>
+    </div>
+    <div class="ctrl-grp">
+      <span class="ctrl-lbl">Altérations</span>
+      <div class="seg" id="segAccid">
+        <button data-accid="b" class="on">♭</button>
+        <button data-accid="d">♯</button>
+      </div>
+    </div>
+    <div class="ctrl-grp">
+      <span class="ctrl-lbl">Rythme — 1ᵉʳ coup</span>
+      <div class="seg" id="segOrient">
+        <button data-or="down" class="on">↓ bas</button>
+        <button data-or="up">↑ haut</button>
+      </div>
+    </div>
+    <div class="ctrl-grp">
+      <span class="ctrl-lbl">Voie rythmique</span>
+      <div class="seg" id="segRhy">
+        <button data-rhy="1" class="on">afficher</button>
+        <button data-rhy="0">masquer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="grille"></div>
+
+  <div class="footer-actions">
+    <button id="btnPrint" class="btn-ghost">🖨 Imprimer / PDF</button>
+    <button id="btnJSON" class="btn-ghost">⧉ Copier (JSON)</button>
+    <button id="btnText" class="btn-ghost">⧉ Copier (texte)</button>
+    <button id="btnReset" class="btn-ghost">↺ Repartir d'Aziza</button>
+  </div>
+
+  <div id="printPanel" class="pp">
+    <div class="pp-bar">
+      <span class="pp-title">Aperçu impression</span>
+      <button id="ppRefresh" class="btn-ghost" title="Rafraîchir l'aperçu">↻</button>
+      <button id="ppPrint" class="btn-bar btn-primary">🖨 Imprimer / PDF</button>
+      <button id="ppClose" class="btn-ghost">Fermer</button>
+    </div>
+    <div class="pp-opts">
+      <label><input type="checkbox" id="ppHdr" checked> En-tête</label>
+      <label><input type="checkbox" id="ppCapo" checked> Formes capo</label>
+      <label><input type="checkbox" id="ppReal"> Accords réel</label>
+      <label><input type="checkbox" id="ppLyr" checked> Paroles</label>
+      <label><input type="checkbox" id="ppRhy" checked> Flèches rythme</label>
+      <label><input type="checkbox" id="ppNum"> N° mesure</label>
+      <label><input type="checkbox" id="ppBreak"> Saut de page / section</label>
+      <span class="pp-dense">Mesures/ligne
+        <select id="ppDense"><option value="auto">auto</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
+      </span>
+    </div>
+    <div id="sheet" class="sheet"></div>
+  </div>
+
+  <p class="legend">
+    <span class="mk">│</span> barre · <span style="color:var(--charcoal)">‖</span> section · <span style="font-style:normal">𝄽</span> silence voix ·
+    <b>✕</b> supprimer la mesure · accord = <b>réel</b> et/ou <b>forme capo</b>.
+    <b>Voie rythmique</b> (guitare) sous chaque mesure : défaut <b>4 noires</b>, tape dessus pour piocher une figure FWB. Tout est sauvegardé dans ce navigateur.
+  </p>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // Flux Aziza : découpage approuvé + accords (du JSON), accords collés à leur mesure via {token}.
+  var AZIZA = [
+    "[Intro]",
+    "{Dm}|{Gm}Un soir de septembre, la première fois|{C}....4|{F}un violon posé là, toi qui déplies tes doigts",
+    "",
+    "[Couplet 1]",
+    "{Dm}On t'a vue arriver|{Gm}, petite silhouette, le violon sous le bras|{C}, le piano dans la tête, la voix, les clés de sol|, tout tenait dans tes mains, on ne savait pas encore|, ce que tu pensais, Aziza mais tu as ouvert une porte|, tracé le chemin",
+    "",
+    "[Pré-refrain]",
+    "{Dm}Et chaque semaine le même trajet, depuis Mons|{Gm}, ...3 ne pas rater le tram|{C}, ..2 ne pas rater le train|{A}",
+    "",
+    "[Refrain]",
+    "{Dm}A|{B\u266D}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment avancer|",
+    "",
+    "[Couplet 2]",
+    "{Dm}Les problèmes de papier|{Gm}, tu n'as pas lâché, le stress du retour,|{C}l'heure à surveiller, pourtant devant nous|{F}, calme, précise entière, le solfège devenait simple|{B\u266D}, la note devenait lumière, une année en|{A}tière, à venir, à tenir, ... à rest|er.( heeeee)",
+    "",
+    "[Pré-refrain (2)]",
+    "{Dm}Et chaque|{Gm}semaine le même trajet, depuis|{C}Mons,|{F}ne pas rater le tram|{B\u266D}ne pas rater le train|{A}",
+    "",
+    "[Refrain (2)]",
+    "{Dm}A|{B\u266D}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment avancer|",
+    "",
+    "[Explication (pont)]",
+    "{Dm}Tu nous as fait comprendre autrement,|{B\u266D}la musique sans stress, le goût d'apprendre vraiment|{A}, on garde en nous ce que tu as semé|{Dm}grand professeur on ne t'oubliera pas, A|{B\u266D}ziza ...|{A}mmmmmm|{Dm}mmmmmm",
+    "",
+    "[Refrain final]",
+    "{Dm}A|{B\u266D}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment continuer|...mmmmm",
+    "",
+    "[Conclusion]",
+    "{Dm}Merci pour tout,|{B\u266D}..... A|{A}ziza, ..1 on est fiers de t'avoir ... connue|{Dm}"
+  ].join("\n");
+
+  var REF = {
+    "Intro":"Dm Gm C F", "Couplet 1":"Dm Gm C F B\u266D A", "Pré-refrain":"Dm Gm C A",
+    "Refrain":"Dm B\u266D A Dm", "Couplet 2":"Dm Gm C F B\u266D A  (à confirmer)",
+    "Pré-refrain (2)":"Dm Gm C A", "Refrain (2)":"Dm B\u266D A Dm",
+    "Explication (pont)":"Dm B\u266D A Dm  (motif refrain)", "Refrain final":"Dm B\u266D A Dm", "Conclusion":"B\u266D A Dm"
+  };
+
+  var K_FLUX="aziza_decoupe_v3", K_SET="aziza_set_v1";
+
+  var ta=document.getElementById("flux"), grille=document.getElementById("grille");
+  var countEl=document.getElementById("count"), secountEl=document.getElementById("secount"), silEl=document.getElementById("sil"), nchEl=document.getElementById("nch");
+  var btnInsert=document.getElementById("btnInsert"), btnRemove=document.getElementById("btnRemove");
+  var btnJSON=document.getElementById("btnJSON"), btnText=document.getElementById("btnText"), btnReset=document.getElementById("btnReset");
+  var segDisp=document.getElementById("segDisp"), segAccid=document.getElementById("segAccid");
+  var segOrient=document.getElementById("segOrient"), segRhy=document.getElementById("segRhy");
+  var capoVal=document.getElementById("capoVal"), capoMinus=document.getElementById("capoMinus"), capoPlus=document.getElementById("capoPlus");
+
+  var lastStart=0, lastEnd=0, editing=null, focusAfter=null, appendNext=false;
+  var mode="reel", capo=5, accid="b";
+  var orient="down", showRhy=true, editingRhy=null;
+
+  function save(){ try{ localStorage.setItem(K_FLUX, ta.value); }catch(e){} }
+  function loadFlux(){ try{ var v=localStorage.getItem(K_FLUX); if(v!==null && v!=="") return v; }catch(e){} return AZIZA; }
+  function saveSet(){ try{ localStorage.setItem(K_SET, JSON.stringify({mode:mode,capo:capo,accid:accid,orient:orient,showRhy:showRhy})); }catch(e){} }
+  function loadSet(){ try{ var v=localStorage.getItem(K_SET); if(v){ var s=JSON.parse(v); if(s.mode) mode=s.mode; if(typeof s.capo==="number") capo=s.capo; if(s.accid) accid=s.accid; if(s.orient) orient=s.orient; if(typeof s.showRhy==="boolean") showRhy=s.showRhy; } }catch(e){} }
+
+  // moteur d'accords
+  var SHARP=["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+  var FLAT =["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
+  var LPC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+  function pretty(s){ return s.replace(/#/g,"\u266F").replace(/b/g,"\u266D"); }
+  function parseTok(tok){
+    var m=tok.match(/^([A-G])([#\u266Fb\u266D]?)(.*)$/); if(!m) return null;
+    var pc=LPC[m[1]];
+    if(m[2]==="#"||m[2]==="\u266F") pc=(pc+1)%12; else if(m[2]==="b"||m[2]==="\u266D") pc=(pc+11)%12;
+    return { pc:pc, rest:m[3] };
+  }
+  function fmtTok(tok, semis){ var p=parseTok(tok); if(!p) return tok; var pc=((p.pc+semis)%12+12)%12; return pretty((accid==="d"?SHARP[pc]:FLAT[pc]))+p.rest; }
+  function fmtCT(token, semis){ return fmtTok(token.split(":")[0], semis); }
+
+  // ===== ÉTAGE 3 — voies rythmiques =====
+  // Moteur de figures porté de biblio_rythmique_v4 (notation FWB). Une mesure = suite de figures.
+  var RINK="#3b2f21";
+  var rYL=[28,34,40,46,52], rCY=40, rTOP=14;
+  function rStaff(w){ var s=''; rYL.forEach(function(y){ s+='<line x1="4" y1="'+y+'" x2="'+(w-4)+'" y2="'+y+'" stroke="#cdbb98" stroke-width="1"/>'; }); return s; }
+  function rSvg(w,inner){ return '<svg viewBox="0 0 '+w+' 58" width="100%" height="40" preserveAspectRatio="xMidYMid meet">'+rStaff(w)+inner+'</svg>'; }
+  function hF(cx){ return '<ellipse cx="'+cx+'" cy="'+rCY+'" rx="5" ry="3.6" fill="'+RINK+'" transform="rotate(-18 '+cx+' '+rCY+')"/>'; }
+  function hO(cx,wide){ var rx=wide?6.6:5.1, ry=wide?4.4:3.8, rot=wide?-8:-16; return '<ellipse cx="'+cx+'" cy="'+rCY+'" rx="'+rx+'" ry="'+ry+'" fill="var(--panel)" stroke="'+RINK+'" stroke-width="1.7" transform="rotate('+rot+' '+cx+' '+rCY+')"/>'; }
+  function st(cx,topY){ topY=topY||rTOP; return '<line x1="'+(cx+4.6)+'" y1="38.5" x2="'+(cx+4.6)+'" y2="'+topY+'" stroke="'+RINK+'" stroke-width="1.5"/>'; }
+  function dt(cx){ return '<circle cx="'+(cx+9.5)+'" cy="37" r="1.5" fill="'+RINK+'"/>'; }
+  function fl(cx,n){ var s='', sx=cx+4.6; for(var i=0;i<n;i++){ var y=rTOP+i*6; s+='<path d="M'+sx+','+y+' c7,2 9,8 6,15 c4,-7 1,-12 -6,-14 z" fill="'+RINK+'"/>'; } return s; }
+  function bm(x1,x2,n){ var s=''; for(var i=0;i<n;i++){ var y=rTOP+i*5; s+='<rect x="'+x1+'" y="'+y+'" width="'+(x2-x1).toFixed(1)+'" height="3.2" fill="'+RINK+'"/>'; } return s; }
+  function pbm(x,w){ return '<rect x="'+x+'" y="19" width="'+w+'" height="3.2" fill="'+RINK+'"/>'; }
+  function rWhole(cx){ return '<rect x="'+(cx-6)+'" y="34" width="12" height="3.6" fill="'+RINK+'"/>'; }
+  function rHalf(cx){ return '<rect x="'+(cx-6)+'" y="'+(40-3.6).toFixed(1)+'" width="12" height="3.6" fill="'+RINK+'"/>'; }
+  function rQuarter(cx){ return '<path d="M'+(cx+3)+',30 L'+(cx-2)+',37 L'+(cx+2.5)+',39 L'+(cx-3)+',47 q3,1.5 1.5,4.5" fill="none" stroke="'+RINK+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'; }
+  function rEighth(cx){ return '<circle cx="'+(cx-1)+'" cy="35" r="2.5" fill="'+RINK+'"/><path d="M'+(cx+1.5)+',34 L'+(cx-3.5)+',47" stroke="'+RINK+'" stroke-width="1.8" stroke-linecap="round" fill="none"/>'; }
+  function rSixteenth(cx){ return '<circle cx="'+(cx-1)+'" cy="33" r="2.3" fill="'+RINK+'"/><circle cx="'+(cx-3)+'" cy="40" r="2.3" fill="'+RINK+'"/><path d="M'+(cx+1.5)+',32 L'+(cx-5)+',48" stroke="'+RINK+'" stroke-width="1.8" stroke-linecap="round" fill="none"/>'; }
+  function tpl(x1,x2,num){ var m=((x1+x2)/2).toFixed(1); return '<path d="M'+x1+',9 L'+x1+',5 L'+(m-6)+',5" fill="none" stroke="'+RINK+'" stroke-width="1.1"/>'+'<path d="M'+(+m+6)+',5 L'+x2+',5 L'+x2+',9" fill="none" stroke="'+RINK+'" stroke-width="1.1"/>'+'<text x="'+m+'" y="9" text-anchor="middle" font-size="10" font-style="italic" font-family="Georgia,serif" fill="'+RINK+'">'+num+'</text>'; }
+
+  var FG={
+    ronde:function(){return rSvg(72,hO(34,true));},
+    blanche:function(){return rSvg(72,hO(34)+st(34));},
+    noire:function(){return rSvg(72,hF(34)+st(34));},
+    croche:function(){return rSvg(72,hF(34)+st(34)+fl(34,1));},
+    double:function(){return rSvg(72,hF(34)+st(34)+fl(34,2));},
+    triple:function(){return rSvg(72,hF(34)+st(34)+fl(34,3));},
+    pause:function(){return rSvg(72,rWhole(36));},
+    demiPause:function(){return rSvg(72,rHalf(36));},
+    soupir:function(){return rSvg(72,rQuarter(36));},
+    demiSoupir:function(){return rSvg(72,rEighth(36));},
+    quartSoupir:function(){return rSvg(72,rSixteenth(36));},
+    deuxCroches:function(){var a=26,b=70;return rSvg(100,hF(a)+hF(b)+st(a)+st(b)+bm(a+4.6,b+4.6,1));},
+    quatreDoubles:function(){var xs=[24,46,68,90],n='';xs.forEach(function(x){n+=hF(x)+st(x);});return rSvg(116,n+bm(xs[0]+4.6,xs[3]+4.6,2));},
+    saute:function(){var a=24,b=90;return rSvg(112,hF(a)+st(a)+dt(a)+hF(b)+st(b)+bm(a+4.6,b+4.6,1)+pbm((b+4.6-13).toFixed(1),13));},
+    sauteInv:function(){var a=24,b=58;return rSvg(112,hF(a)+st(a)+hF(b)+st(b)+dt(b)+bm(a+4.6,b+4.6,1)+pbm(a+4.6,13));},
+    syncopette:function(){var a=22,b=44,c=88;return rSvg(112,hF(a)+st(a)+hF(b)+st(b)+hF(c)+st(c)+bm(a+4.6,c+4.6,1)+pbm(a+4.6,13)+pbm((c+4.6-13).toFixed(1),13));},
+    contretemps:function(){var cx=66;return rSvg(100,rEighth(33)+hF(cx)+st(cx)+fl(cx,1));},
+    chasse:function(){var a=22,b=44,c=66;return rSvg(100,hF(a)+st(a)+hF(b)+st(b)+hF(c)+st(c)+bm(a+4.6,c+4.6,1)+pbm(a+4.6,(b-a).toFixed(1)));},
+    syncope:function(){return rSvg(110,hF(20)+st(20)+fl(20,1)+hF(44)+st(44)+hF(86)+st(86)+fl(86,1));},
+    troisCroches:function(){var xs=[30,58,86],n='';xs.forEach(function(x){n+=hF(x)+st(x);});return rSvg(116,n+bm(xs[0]+4.6,xs[2]+4.6,1));},
+    noireCroche:function(){return rSvg(116,hF(30)+st(30)+hF(86)+st(86)+fl(86,1));},
+    crocheNoire:function(){return rSvg(116,hF(30)+st(30)+fl(30,1)+hF(58)+st(58));},
+    noirePointee:function(){return rSvg(116,hF(46)+st(46)+dt(46));},
+    sixDoubles:function(){var xs=[22,36,50,64,78,92],n='';xs.forEach(function(x){n+=hF(x)+st(x);});return rSvg(116,n+bm(xs[0]+4.6,xs[5]+4.6,2));},
+    sicilienne:function(){var a=24,b=64,c=82;return rSvg(112,hF(a)+st(a)+dt(a)+hF(b)+st(b)+hF(c)+st(c)+bm(a+4.6,c+4.6,1)+pbm((b+4.6-6).toFixed(1),12));},
+    triolet:function(){var xs=[30,58,86],n='';xs.forEach(function(x){n+=hF(x)+st(x);});return rSvg(116,n+bm(xs[0]+4.6,xs[2]+4.6,1)+tpl(xs[0]+4.6,xs[2]+4.6,3));},
+    duolet:function(){var a=36,b=80;return rSvg(116,hF(a)+st(a)+hF(b)+st(b)+bm(a+4.6,b+4.6,1)+tpl(a+4.6,b+4.6,2));},
+    quartolet:function(){var xs=[24,46,68,90],n='';xs.forEach(function(x){n+=hF(x)+st(x);});return rSvg(116,n+bm(xs[0]+4.6,xs[3]+4.6,2)+tpl(xs[0]+4.6,xs[3]+4.6,4));}
+  };
+
+  function V(s){ return '<span class="v">'+s+'</span>'; }
+  var SIL=V('–'), NAV=V('—');
+  // aD = 1ᵉʳ coup bas · aU = 1ᵉʳ coup haut (binaires) · dur en temps (4/4) · bin=câblé flèches · ref=solfège (pas de coup)
+  var FIGURES={
+    ronde:{nm:'Ronde',dur:4,aD:'↓'+V('···')},
+    blanche:{nm:'Blanche',dur:2,aD:'↓'+V('·')},
+    noire:{nm:'Noire',dur:1,aD:'↓'},
+    croche:{nm:'Croche',dur:0.5,aD:'↓'},
+    double:{nm:'Double-croche',dur:0.25,aD:'↓'},
+    triple:{nm:'Triple-croche',dur:0.125,aD:'↓'},
+    pause:{nm:'Pause',dur:4,aD:SIL},
+    demiPause:{nm:'Demi-pause',dur:2,aD:SIL},
+    soupir:{nm:'Soupir',dur:1,aD:SIL},
+    demiSoupir:{nm:'Demi-soupir',dur:0.5,aD:SIL},
+    quartSoupir:{nm:'Quart de soupir',dur:0.25,aD:SIL},
+    deuxCroches:{nm:'Deux croches',dur:1,bin:true,aD:'↓↑',aU:'↑↓'},
+    quatreDoubles:{nm:'Quatre doubles',dur:1,bin:true,aD:'↓↑↓↑',aU:'↑↓↑↓'},
+    saute:{nm:'Saute',dur:1,bin:true,aD:'↓'+V('··')+'↑',aU:'↑'+V('··')+'↓'},
+    sauteInv:{nm:'Saute inversée',dur:1,bin:true,aD:'↓↑'+V('··'),aU:'↑↓'+V('··')},
+    syncopette:{nm:'Syncopette',dur:1,bin:true,aD:'↓↑'+V('·')+'↑',aU:'↑↓'+V('·')+'↓'},
+    contretemps:{nm:'Contretemps',dur:1,bin:true,aD:SIL+'↑',aU:SIL+'↓'},
+    chasse:{nm:'Chassé',dur:1,bin:true,aD:'↓↑↓'+V('·'),aU:'↑↓↑'+V('·')},
+    syncope:{nm:'Syncope',dur:2,bin:true,aD:'↓ ↑'+V('·')+' ↑',aU:'↑ ↓'+V('·')+' ↓'},
+    troisCroches:{nm:'Trois croches',dur:1.5,ref:true},
+    noireCroche:{nm:'Noire–croche',dur:1.5,ref:true},
+    crocheNoire:{nm:'Croche–noire',dur:1.5,ref:true},
+    noirePointee:{nm:'Noire pointée',dur:1.5,ref:true},
+    sixDoubles:{nm:'Six doubles',dur:3,ref:true},
+    sicilienne:{nm:'Sicilienne',dur:1.5,ref:true},
+    triolet:{nm:'Triolet',dur:1,ref:true},
+    duolet:{nm:'Duolet',dur:1.5,ref:true},
+    quartolet:{nm:'Quartolet',dur:1.5,ref:true}
+  };
+  var FIGSECTIONS=[
+    {t:'Notes',keys:['ronde','blanche','noire','croche','double','triple']},
+    {t:'Silences',keys:['pause','demiPause','soupir','demiSoupir','quartSoupir']},
+    {t:'Groupements binaires',keys:['deuxCroches','quatreDoubles','saute','sauteInv','syncopette','contretemps','chasse','syncope']},
+    {t:'Ternaires — réf. solfège',keys:['troisCroches','noireCroche','crocheNoire','noirePointee','sixDoubles','sicilienne']},
+    {t:'Divisions artificielles — réf. solfège',keys:['triolet','duolet','quartolet']}
+  ];
+  var DEFAULT_RHY=['noire','noire','noire','noire'];
+
+  function parseRhythm(str){ if(!str) return DEFAULT_RHY.slice(); var ks=str.split(/\s+/).filter(function(k){return FIGURES[k];}); return ks.length?ks:DEFAULT_RHY.slice(); }
+  function isDefaultRhy(arr){ return arr.length===4 && arr.every(function(k){return k==='noire';}); }
+  function figArrows(key){ var f=FIGURES[key]; if(!f) return ''; if(f.ref) return NAV; return (orient==='up'&&f.aU)?f.aU:f.aD; }
+  function rhyArrows(arr){ return arr.map(figArrows).join(' '); }
+  function rhyArrowsTxt(arr){ return rhyArrows(arr).replace(/<[^>]+>/g,''); }
+  function rhyFill(arr){ var s=0; arr.forEach(function(k){ if(FIGURES[k]) s+=FIGURES[k].dur; }); return Math.round(s*1000)/1000; }
+  function figLabel(arr){ if(!arr.length) return '(vide)'; var same=arr.every(function(k){return k===arr[0];});
+    if(same) return (FIGURES[arr[0]]?FIGURES[arr[0]].nm:arr[0])+(arr.length>1?' \u00d7'+arr.length:''); 
+    return arr.map(function(k){return FIGURES[k]?FIGURES[k].nm:k;}).join(' \u00b7 '); }
+
+  // un segment peut porter, en tête, plusieurs {…} : {accord} et/ou {r: figures}
+  function parseSeg(seg){
+    var chordStr='', rhythmStr='', rest=seg, gm, re=/^\s*\{([^}]*)\}/;
+    while((gm=rest.match(re))){
+      var inner=gm[1].trim();
+      if(/^r:/.test(inner)){ if(!rhythmStr) rhythmStr=inner.replace(/^r:\s*/,'').trim(); }
+      else { if(!chordStr) chordStr=inner; }
+      rest=rest.slice(gm[0].length);
+    }
+    return { chordStr:chordStr, rhythmStr:rhythmStr, lyric:rest };
+  }
+  function buildSeg(chordStr, rhythmStr, lyric){ return (chordStr?'{'+chordStr+'}':'')+(rhythmStr?'{r: '+rhythmStr+'}':'')+lyric; }
+
+  function setRhythm(m, arr){
+    var rhythmStr=isDefaultRhy(arr)?'':arr.join(' ');
+    var L=linesOf(), segs=L[m.lineIndex].split('|'), ps=parseSeg(segs[m.segIndex]);
+    segs[m.segIndex]=buildSeg(ps.chordStr, rhythmStr, ps.lyric); L[m.lineIndex]=segs.join('|');
+    setFlux(L); // editingRhy reste ouvert : on continue d'éditer la même mesure
+  }
+
+  function buildRhyEditor(m){
+    var wrap=el('div','rhy-edit');
+    var head=el('div','rhy-edit-head');
+    head.appendChild(el('span','rhy-edit-t','Rythme · M'+m.idx+' · voie guitare'));
+    var fill=rhyFill(m.rhythm);
+    var fEl=el('span','rhy-fill'+(Math.abs(fill-4)<0.001?' ok':''), 'appui '+fill+'/4');
+    head.appendChild(fEl); wrap.appendChild(head);
+
+    var seq=el('div','rhy-seq');
+    if(!m.rhythm.length) seq.appendChild(el('span','rhy-empty','(vide)'));
+    m.rhythm.forEach(function(k,ix){
+      var chip=el('div','rhy-chipE');
+      var sv=el('div','rhy-chipE-stave'); sv.innerHTML=FG[k]?FG[k]():''; chip.appendChild(sv);
+      chip.appendChild(el('span','rhy-chipE-nm', FIGURES[k]?FIGURES[k].nm:k));
+      var x=el('button','rhy-x','✕'); x.setAttribute('aria-label','retirer');
+      x.addEventListener('click', function(){ var a=m.rhythm.slice(); a.splice(ix,1); setRhythm(m, a.length?a:DEFAULT_RHY.slice()); });
+      chip.appendChild(x); seq.appendChild(chip);
+    });
+    wrap.appendChild(seq);
+
+    var acts=el('div','rhy-acts');
+    var reset=el('button','pick clr','↻ 4 noires'); reset.addEventListener('click', function(){ setRhythm(m, DEFAULT_RHY.slice()); });
+    var clear=el('button','pick clr','✕ vider'); clear.addEventListener('click', function(){ setRhythm(m, []); });
+    var done=el('button','pick ok','✓ fermer'); done.addEventListener('click', function(){ editingRhy=null; render(); });
+    acts.appendChild(reset); acts.appendChild(clear); acts.appendChild(done); wrap.appendChild(acts);
+
+    var lib=el('div','fig-lib'); lib.appendChild(el('div','fig-lib-h','Ajouter une figure (s\u2019empile à droite)'));
+    FIGSECTIONS.forEach(function(sec){
+      lib.appendChild(el('div','fig-sec', sec.t));
+      var grid=el('div','fig-grid');
+      sec.keys.forEach(function(k){
+        var b=el('button','fig-pick');
+        var sv=el('div','fig-pick-stave'); sv.innerHTML=FG[k]?FG[k]():''; b.appendChild(sv);
+        var lab=el('div','fig-pick-lab'); var nb=el('b',null,FIGURES[k].nm); var sp=document.createElement('span'); sp.innerHTML=rhyArrows([k]);
+        lab.appendChild(nb); lab.appendChild(sp); b.appendChild(lab);
+        b.addEventListener('click', function(){ var a=m.rhythm.slice(); a.push(k); setRhythm(m, a); });
+        grid.appendChild(b);
+      });
+      lib.appendChild(grid);
+    });
+    wrap.appendChild(lib);
+    return wrap;
+  }
+
+  function syncSel(){ lastStart=ta.selectionStart; lastEnd=ta.selectionEnd; }
+  function curStart(){ return document.activeElement===ta?ta.selectionStart:lastStart; }
+  function curEnd(){ return document.activeElement===ta?ta.selectionEnd:lastEnd; }
+  ta.addEventListener("keyup",syncSel); ta.addEventListener("mouseup",syncSel); ta.addEventListener("click",syncSel); ta.addEventListener("select",syncSel);
+  ta.addEventListener("input", function(){ syncSel(); save(); editing=null; render(); });
+  [btnInsert,btnRemove].forEach(function(b){ b.addEventListener("pointerdown", function(e){ e.preventDefault(); }); });
+
+  function insertBar(){
+    var s=curStart(), e=curEnd(), v=ta.value;
+    ta.value=v.slice(0,s)+"|"+v.slice(e); var pos=s+1; ta.setSelectionRange(pos,pos); lastStart=lastEnd=pos; ta.focus(); save(); render();
+  }
+  function removeBar(){
+    var s=curStart(), v=ta.value;
+    var i=v.lastIndexOf("|", s-1); if(i===-1) i=v.indexOf("|", s); if(i===-1) return;
+    var after=v.slice(i+1);
+    var mt; while((mt=after.match(/^\s*\{[^}]*\}/))){ after=after.slice(mt[0].length); } // fusion : on garde accord+rythme de gauche
+    ta.value=v.slice(0,i)+after; ta.setSelectionRange(i,i); lastStart=lastEnd=i; ta.focus(); save(); render();
+  }
+  btnInsert.addEventListener("click",insertBar); btnRemove.addEventListener("click",removeBar);
+
+  // parsing (par ligne ; accord en tête de segment via {…})
+  function parse(text){
+    var lines=text.split(/\r?\n/), sections=[], cur=null, g=0;
+    for(var li=0; li<lines.length; li++){
+      var raw=lines[li], hm=raw.match(/^\s*\[(.+?)\]\s*$/);
+      if(hm){ cur={ name:hm[1].trim(), measures:[] }; sections.push(cur); continue; }
+      if(raw.trim()==="") continue;
+      if(!cur){ cur={ name:"(sans titre)", measures:[] }; sections.push(cur); }
+      var segs=raw.split("|");
+      for(var si=0; si<segs.length; si++){
+        var seg=segs[si], ps=parseSeg(seg), chordStr=ps.chordStr, rhythmStr=ps.rhythmStr, lyric=ps.lyric;
+        lyric=lyric.replace(/\{[^}]*\}/g," ").replace(/\s+/g," ").trim(); // nettoie d'éventuels {…} résiduels
+        cur.measures.push({ idx:++g, lineIndex:li, segIndex:si, silence:lyric.length===0, text:lyric,
+          chordStr:chordStr, chords: chordStr?chordStr.split(/\s+/).filter(Boolean):[],
+          rhythmStr:rhythmStr, rhythm: parseRhythm(rhythmStr) });
+      }
+    }
+    return sections;
+  }
+  function el(t,c,x){ var n=document.createElement(t); if(c) n.className=c; if(x!=null) n.textContent=x; return n; }
+  function linesOf(){ return ta.value.split(/\r?\n/); }
+  function setFlux(L){ ta.value=L.join("\n"); save(); render(); }
+
+  function setChord(m, chordStr){
+    chordStr=(chordStr||"").replace(/\s+/g," ").replace(/^\s*([a-g])/, function(s){ return s.toUpperCase(); }).trim();
+    var L=linesOf(), segs=L[m.lineIndex].split("|"), ps=parseSeg(segs[m.segIndex]);
+    segs[m.segIndex]=buildSeg(chordStr, ps.rhythmStr, ps.lyric); L[m.lineIndex]=segs.join("|");
+    editing=null; setFlux(L);
+  }
+  function deleteMeasure(m){
+    var L=linesOf(), segs=L[m.lineIndex].split("|");
+    if(segs.length<=1){ L.splice(m.lineIndex,1); }
+    else { segs.splice(m.segIndex,1); L[m.lineIndex]=segs.join("|"); }
+    editing=null; setFlux(L);
+  }
+
+  function render(){
+    var data=parse(ta.value), frag=document.createDocumentFragment();
+    var total=0, silences=0, nch=0; focusAfter=null; appendNext=false;
+
+    data.forEach(function(sec){
+      var secEl=el("div","section");
+      var head=el("div","sec-head"); head.appendChild(el("h3",null,sec.name)); head.appendChild(el("span","count", sec.measures.length+" mes."));
+      secEl.appendChild(head);
+      if(REF[sec.name]){ var ref=el("div","sec-ref"); ref.appendChild(el("b",null,"réf : ")); ref.appendChild(document.createTextNode(REF[sec.name])); secEl.appendChild(ref); }
+
+      var row=el("div","measures-row"); row.appendChild(el("div","barline section-start"));
+      sec.measures.forEach(function(m,i){
+        if(i>0) row.appendChild(el("div","barline"));
+        var cell=el("div","cell"+(m.silence?" tacet":""));
+        var top=el("div","cell-top"); var topL=el("div","cell-top-l");
+        topL.appendChild(el("span","idx","M"+m.idx));
+
+        if(editing===m.idx){
+          var box=el("div","chord-edit");
+          var inp=el("input","chord-input"); inp.type="text"; inp.value=m.chordStr;
+          inp.setAttribute("autocapitalize","off"); inp.setAttribute("autocomplete","off");
+          inp.addEventListener("keydown", function(e){ if(e.key==="Enter") setChord(m,inp.value); else if(e.key==="Escape"){ editing=null; render(); } });
+          var picks=el("div","chord-picks");
+          ["Dm","Gm","C","F","B\u266D","A","Em","E"].forEach(function(c){
+            var b=el("button","pick",c);
+            b.addEventListener("pointerdown", function(e){ e.preventDefault(); });
+            b.addEventListener("click", function(){
+              if(appendNext){ inp.value=(inp.value.trim()+" "+c).trim(); appendNext=false; addB.classList.remove("armed"); }
+              else inp.value=c;
+              inp.focus();
+            });
+            picks.appendChild(b);
+          });
+          var addB=el("button","pick add","+ accord");
+          addB.addEventListener("pointerdown", function(e){ e.preventDefault(); });
+          addB.addEventListener("click", function(){ appendNext=true; addB.classList.add("armed"); inp.focus(); });
+          var ok=el("button","pick ok","✓"); ok.addEventListener("click", function(){ setChord(m,inp.value); });
+          var clr=el("button","pick clr","✕ vider"); clr.addEventListener("click", function(){ setChord(m,""); });
+          picks.appendChild(addB); picks.appendChild(ok); picks.appendChild(clr);
+          box.appendChild(inp); box.appendChild(picks); topL.appendChild(box);
+          focusAfter=inp;
+        } else {
+          var chip=el("button","chord-chip"+(m.chords.length?"":" empty"));
+          if(!m.chords.length){ chip.textContent="+ accord"; }
+          else {
+            m.chords.forEach(function(tok,ci){
+              if(ci>0) chip.appendChild(el("div","ch-div"));
+              var col=el("div","ch-col"); var beat=tok.split(":")[1];
+              if(mode==="reel"){ col.appendChild(el("span","ch-reel", fmtCT(tok,0))); }
+              else if(mode==="capo"){ col.appendChild(el("span","ch-reel", fmtCT(tok,-capo))); }
+              else { col.appendChild(el("span","ch-reel", fmtCT(tok,0))); col.appendChild(el("span","ch-shape", fmtCT(tok,-capo))); }
+              if(beat) col.appendChild(el("span","ch-beat","t"+beat));
+              chip.appendChild(col);
+            });
+          }
+          chip.addEventListener("click", function(){ editing=m.idx; editingRhy=null; render(); });
+          topL.appendChild(chip);
+        }
+        top.appendChild(topL);
+
+        if(editing!==m.idx){
+          var del=el("button","del","✕"); del.setAttribute("aria-label","Supprimer la mesure M"+m.idx);
+          del.addEventListener("click", function(){
+            if(!m.silence && m.text.length>0){
+              if(!confirm("Supprimer la mesure M"+m.idx+" (« "+m.text.slice(0,40)+(m.text.length>40?"…":"")+" ») ?")) return;
+            }
+            deleteMeasure(m);
+          });
+          top.appendChild(del);
+        }
+        cell.appendChild(top);
+        cell.appendChild(el("div","frag", m.silence?"silence (voix)":m.text));
+        if(showRhy){
+          if(editingRhy===m.idx){
+            cell.appendChild(buildRhyEditor(m));
+          } else {
+            var rhy=el("div","rhy"+(isDefaultRhy(m.rhythm)?" def":""));
+            var arrEl=el("div","rhy-arrows"); arrEl.innerHTML=rhyArrows(m.rhythm);
+            rhy.appendChild(arrEl);
+            rhy.appendChild(el("span","rhy-tag", isDefaultRhy(m.rhythm)?"4 noires":figLabel(m.rhythm)));
+            rhy.addEventListener("click", function(){ editingRhy=m.idx; editing=null; render(); });
+            cell.appendChild(rhy);
+          }
+        }
+        row.appendChild(cell);
+        total++; if(m.silence) silences++; if(m.chords.length) nch++;
+      });
+      secEl.appendChild(row); frag.appendChild(secEl);
+    });
+
+    grille.innerHTML=""; grille.appendChild(frag);
+    countEl.textContent=total; secountEl.textContent=data.length; silEl.textContent=silences; nchEl.textContent=nch;
+    if(focusAfter){ var f=focusAfter; setTimeout(function(){ try{ f.focus(); f.select(); }catch(e){} }, 0); }
+  }
+
+  segDisp.addEventListener("click", function(e){ var b=e.target.closest("button"); if(!b) return; mode=b.getAttribute("data-mode");
+    Array.prototype.forEach.call(segDisp.querySelectorAll("button"), function(x){ x.classList.toggle("on", x===b); }); saveSet(); render(); });
+  segAccid.addEventListener("click", function(e){ var b=e.target.closest("button"); if(!b) return; accid=b.getAttribute("data-accid");
+    Array.prototype.forEach.call(segAccid.querySelectorAll("button"), function(x){ x.classList.toggle("on", x===b); }); saveSet(); render(); });
+  segOrient.addEventListener("click", function(e){ var b=e.target.closest("button"); if(!b) return; orient=b.getAttribute("data-or");
+    Array.prototype.forEach.call(segOrient.querySelectorAll("button"), function(x){ x.classList.toggle("on", x===b); }); saveSet(); render(); });
+  segRhy.addEventListener("click", function(e){ var b=e.target.closest("button"); if(!b) return; showRhy=b.getAttribute("data-rhy")==="1";
+    Array.prototype.forEach.call(segRhy.querySelectorAll("button"), function(x){ x.classList.toggle("on", x===b); }); editingRhy=null; saveSet(); render(); });
+  function setCapo(v){ capo=Math.max(0,Math.min(11,v)); capoVal.textContent=capo; saveSet(); render(); }
+  capoMinus.addEventListener("click", function(){ setCapo(capo-1); }); capoPlus.addEventListener("click", function(){ setCapo(capo+1); });
+
+  function fallbackCopy(str,cb){ var t=document.createElement("textarea"); t.value=str; t.style.position="fixed"; t.style.opacity="0"; document.body.appendChild(t); t.focus(); t.select(); try{ document.execCommand("copy"); }catch(e){} t.remove(); if(cb) cb(); }
+  function copy(str,btn,msg){ var o=btn.textContent; var done=function(){ btn.textContent=msg; setTimeout(function(){ btn.textContent=o; },1200); };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(str).then(done).catch(function(){ fallbackCopy(str,done); }); } else fallbackCopy(str,done); }
+
+  btnJSON.addEventListener("click", function(){
+    var data=parse(ta.value).map(function(s){
+      return { section:s.name, measures: s.measures.map(function(m){
+        var out= m.silence?{ silence:true }:{ texte:m.text };
+        if(m.chords.length){ out.accord=m.chords.map(function(t){ return fmtCT(t,0); }).join(" "); out.forme_capo=m.chords.map(function(t){ return fmtCT(t,-capo); }).join(" "); out.accords_brut=m.chordStr; }
+        if(!isDefaultRhy(m.rhythm)){ out.rythme=m.rhythm.join(" "); }
+        out.rythme_fleches=rhyArrowsTxt(m.rhythm);
+        return out;
+      }) };
+    });
+    copy(JSON.stringify({ song:"Aziza", capo:capo, sections:data }, null, 2), btnJSON, "JSON copié");
+  });
+  btnText.addEventListener("click", function(){
+    var data=parse(ta.value), out="";
+    data.forEach(function(s){ out+="["+s.name+"]\n";
+      s.measures.forEach(function(m){ var ch=m.chords.length?"["+m.chords.map(function(t){ return fmtCT(t,0); }).join(" ")+"] ":""; out+="M"+m.idx+" | "+ch+(m.silence?"(silence voix)":m.text)+"\n";
+        out+="     \u266a "+rhyArrowsTxt(m.rhythm)+"   ["+m.rhythm.join(" ")+"]\n"; });
+      out+="\n"; });
+    copy(out.replace(/\s+$/,""), btnText, "Texte copié");
+  });
+  btnReset.addEventListener("click", function(){ if(confirm("Repartir du flux Aziza par défaut ? Tes modifications (coupes et accords) seront effacées.")){ ta.value=AZIZA; editing=null; save(); render(); ta.focus(); } });
+
+  // ===== MODULE IMPRESSION =====
+  var printPanel=document.getElementById("printPanel"), sheetEl=document.getElementById("sheet");
+  var btnPrint=document.getElementById("btnPrint"), ppPrint=document.getElementById("ppPrint"), ppClose=document.getElementById("ppClose"), ppRefresh=document.getElementById("ppRefresh");
+  var ppHdr=document.getElementById("ppHdr"), ppReal=document.getElementById("ppReal"), ppCapo=document.getElementById("ppCapo"), ppLyr=document.getElementById("ppLyr"), ppRhy=document.getElementById("ppRhy"), ppNum=document.getElementById("ppNum"), ppBreak=document.getElementById("ppBreak"), ppDense=document.getElementById("ppDense");
+  function buildSheet(){
+    var realOn=ppReal.checked, capoOn=ppCapo.checked, lyrOn=ppLyr.checked, rhyOn=ppRhy.checked, numOn=ppNum.checked, hdrOn=ppHdr.checked, dense=ppDense.value;
+    sheetEl.className="sheet"+(ppBreak.checked?" brk":""); sheetEl.innerHTML="";
+    if(hdrOn){ var h=el("div","sheet-head"); h.appendChild(el("div","sheet-title","Aziza"));
+      var sub=["Ré mineur","\u2669=140","4/4"]; if(capoOn) sub.push("Capo "+capo+" \u2014 formes Am");
+      h.appendChild(el("div","sheet-sub", sub.join("   \u00b7   "))); sheetEl.appendChild(h); }
+    parse(ta.value).forEach(function(s){
+      var sec=el("section","sheet-section"); sec.appendChild(el("h3","sheet-sech", s.name));
+      var bars=el("div","sheet-bars"+(dense!=="auto"?" grid":""));
+      if(dense!=="auto") bars.style.gridTemplateColumns="repeat("+dense+",1fr)";
+      s.measures.forEach(function(m){
+        var bar=el("div","bar"+(m.silence?" sil":""));
+        if(numOn) bar.appendChild(el("span","bar-n","M"+m.idx));
+        if((realOn||capoOn) && m.chords.length){
+          var realStr=m.chords.map(function(t){ return fmtCT(t,0); }).join(" ");
+          var capoStr=m.chords.map(function(t){ return fmtCT(t,-capo); }).join(" ");
+          var ch=el("div","bar-ch");
+          if(capoOn&&realOn) ch.innerHTML="<b>"+capoStr+"</b><span class=\"ch-r\">"+realStr+"</span>";
+          else ch.innerHTML="<b>"+(capoOn?capoStr:realStr)+"</b>";
+          bar.appendChild(ch);
+        }
+        if(rhyOn){ var ar=el("div","bar-rhy"); ar.innerHTML=rhyArrows(m.rhythm); bar.appendChild(ar); }
+        if(lyrOn && !m.silence && m.text){ bar.appendChild(el("div","bar-lyr", m.text)); }
+        bars.appendChild(bar);
+      });
+      sec.appendChild(bars); sheetEl.appendChild(sec);
+    });
+  }
+  btnPrint.addEventListener("click", function(){ buildSheet(); printPanel.classList.add("open"); printPanel.scrollIntoView({behavior:"smooth",block:"start"}); });
+  ppClose.addEventListener("click", function(){ printPanel.classList.remove("open"); });
+  ppRefresh.addEventListener("click", buildSheet);
+  ppPrint.addEventListener("click", function(){ buildSheet(); window.print(); });
+  [ppHdr,ppReal,ppCapo,ppLyr,ppRhy,ppNum,ppBreak,ppDense].forEach(function(x){ x.addEventListener("change", buildSheet); });
+  window.addEventListener("beforeprint", buildSheet);
+
+  // init
+  loadSet(); ta.value=loadFlux(); capoVal.textContent=capo;
+  Array.prototype.forEach.call(segDisp.querySelectorAll("button"), function(x){ x.classList.toggle("on", x.getAttribute("data-mode")===mode); });
+  Array.prototype.forEach.call(segAccid.querySelectorAll("button"), function(x){ x.classList.toggle("on", x.getAttribute("data-accid")===accid); });
+  Array.prototype.forEach.call(segOrient.querySelectorAll("button"), function(x){ x.classList.toggle("on", x.getAttribute("data-or")===orient); });
+  Array.prototype.forEach.call(segRhy.querySelectorAll("button"), function(x){ x.classList.toggle("on", (x.getAttribute("data-rhy")==="1")===showRhy); });
+  ppRhy.checked=showRhy; // l'aperçu reflète la visibilité du rythme à l'écran
+  syncSel(); render();
+})();
+</script>
+</body>
+</html>
