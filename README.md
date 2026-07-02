@@ -3,11 +3,11 @@
 Éditeur de *lead sheet* (grille d'accords + paroles + rythme pour guitaristes) à fichier unique, hors-ligne, pensé pour le mobile. Livré préchargé avec la chanson **Aziza**, mais le moteur accepte n'importe quel flux.
 
 **En ligne** : ouvrir `decoupe_mesures_aziza.html` dans un navigateur — aucune installation. Si hébergé sur GitHub Pages : `https://nmulongo-sys.github.io/leadsheetproject/`.
-**Statut** : révision 2026-07-02 • fichier HTML unique, sans dépendance externe, fonctionne hors ligne et sur Android.
+**Statut** : révision 2026-07-02 (v2 — refonte UI) • fichier HTML unique, sans dépendance externe, fonctionne hors ligne et sur Android.
 
 ## Utilisation
 
-Tout se pilote depuis une seule page, et **tout est sauvegardé dans le navigateur** (rien n'est envoyé nulle part).
+Tout se pilote depuis une seule page, et **tout est sauvegardé dans le navigateur** (rien n'est envoyé nulle part). Au premier lancement, un **guide pas à pas** (wizard, 6 écrans) présente l'app ; il se rouvre via le bouton **🎓 Guide**. Chaque fonction porte une **bulle d'aide « ? »** (tap/clic) qui l'explique en contexte. Un bouton **↶ Annuler** (Ctrl+Z) défait la dernière action structurelle (barre, accord, rythme, suppression).
 
 1. **Découpe (étage 1).** Le champ de texte du haut est la source de vérité. Une ligne `[Nom de section]` ouvre une section ; dans une ligne, les mesures sont séparées par `|`. La grille se régénère à chaque frappe.
 2. **Accords (étage 2).** Cliquer sur une mesure pour lui poser un accord. Trois affichages au choix (réel / formes capo / les deux), réglage du capo (V par défaut), et altérations ♭/♯.
@@ -42,6 +42,7 @@ Cœur de la reprise : une session ultérieure doit pouvoir continuer sans que le
 **Persistance.** `localStorage`, **isolée par navigateur — aucune synchro centrale**. Deux clés :
 - `aziza_decoupe_v3` — le flux (donc aussi accords **et** rythme, puisqu'ils voyagent dans le texte ; pas de clé rythme séparée).
 - `aziza_set_v1` — les réglages : mode d'affichage (réel/capo/les deux), capo, altérations, orientation du 1ᵉʳ coup, affichage de la voie rythmique.
+- `aziza_wiz_v1` — drapeau « guide déjà vu » (le wizard ne se rouvre pas automatiquement).
 
 **Module impression.** Bouton → panneau d'aperçu (`#printPanel`) qui rend une feuille propre (`#sheet`). Options : en-tête, formes capo, accords réel, paroles, flèches rythme, n° de mesure, saut de page par section, mesures par ligne. Le bloc `@media print` masque toute l'interface et n'imprime que la feuille.
 
@@ -50,6 +51,14 @@ Cœur de la reprise : une session ultérieure doit pouvoir continuer sans que le
 **Chanson embarquée par défaut.** *Aziza* — ré mineur, ♩ = 140, 4/4, capo V (formes Am), **56 mesures réparties en 10 sections** (Intro, Couplet 1, Pré-refrain, Refrain, Couplet 2, Pré-refrain (2), Refrain (2), Explication (pont), Refrain final, Conclusion).
 
 ## Journal de développement
+
+### 2026-07-02 — v2 : refonte de l'interface (design, ergonomie, aide intégrée)
+- **Design.** Thème « papier raffiné » : même identité papier/crayon mais professionnalisée — jetons de design (rayons, ombres `--sh-1/2/3`), contrôles segmentés en pilules avec état actif en relief, boutons avec hiérarchie claire (primaire dégradé, fantômes), cartes de mesure avec ombre douce, en-tête avec pictogramme 𝄞, favicon.
+- **Structure.** La page est organisée en **4 étapes numérotées** (① Texte & découpe → ② Réglages → ③ Grille → ④ Imprimer & partager) pour guider le non-initié ; la légende devient un panneau repliable `<details>` ; état vide accueillant si le flux est effacé.
+- **Aide généralisée.** Bulles **« ? »** sur chaque fonction (16 sujets : flux, barres, compteurs, affichage, capo, altérations, 1ᵉʳ coup, voie rythmique, grille, éditeur d'accord, éditeur de rythme, appui X/4, bibliothèque, actions, impression) — popover tactile, fermé par tap ailleurs ou Échap. `title=` natifs en complément sur les contrôles.
+- **Wizard.** Guide de démarrage en 6 écrans (bienvenue → découpe → accords → rythme → impression → sauvegarde), affiché au premier lancement (clé `aziza_wiz_v1`), rouvrable via **🎓 Guide**. Aide contextuelle au niveau mesure : en-têtes explicites « Accord · M{n} » et « Rythme · M{n} » dans les éditeurs, avec leurs propres bulles.
+- **Ergonomie.** **Annuler** (↶ / Ctrl+Z) pour toutes les actions structurelles (pile de 60 états) ; **toasts** de confirmation (copie, suppression, restauration) au lieu du changement de libellé des boutons ; placeholder d'exemple dans l'éditeur d'accord (`ex. Dm — ou Dm:1 A:3`) ; bouton « ✓ Valider » explicite ; indicateur ✎ sur la voie rythmique ; libellés d'options d'impression documentés.
+- **Inchangé (compatibilité totale).** Moteur de parsing, tokens `{…}` / `{r:…}`, bibliothèque FWB, module impression, exports JSON/texte, clés `aziza_decoupe_v3` et `aziza_set_v1` : les données existantes des utilisateurs sont conservées telles quelles.
 
 ### 2026-07-02 — révision initiale (étages 1–3 + module impression)
 - Première documentation de l'app.

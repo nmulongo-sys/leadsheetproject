@@ -3,75 +3,121 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Lead sheet Aziza — flux · grille · accords</title>
+<meta name="theme-color" content="#efe7d6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%B8%3C/text%3E%3C/svg%3E">
+<title>Lead sheet Aziza — flux · grille · accords · rythme</title>
 <style>
   :root{
-    --paper:#ece3cf; --paper-2:#e4d8be; --panel:#f2ead8;
-    --ink:#3b2f21; --ink-soft:#6f5d45;
-    --pencil:#b2392c; --pencil-soft:#cd6b59; --charcoal:#2a2724;
-    --line:#cdbb98; --line-soft:#dccaa6;
+    --paper:#efe7d6; --paper-2:#e7dcc2; --panel:#f5efe0; --card:#faf6ea; --card-hi:#fffdf4;
+    --ink:#3b2f21; --ink-soft:#7a6850; --ink-faint:#a08d70;
+    --pencil:#b2392c; --pencil-soft:#cd6b59; --pencil-bg:rgba(178,57,44,.07); --charcoal:#2a2724;
+    --line:#d5c4a1; --line-soft:#e2d3b1;
     --serif: Georgia, "Times New Roman", serif;
     --display: "Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
     --mono: "Courier New", ui-monospace, monospace;
+    --r-sm:6px; --r-md:10px; --r-lg:14px;
+    --sh-1: 0 1px 2px rgba(80,60,35,.10), 0 2px 6px rgba(80,60,35,.06);
+    --sh-2: 0 2px 6px rgba(80,60,35,.12), 0 8px 24px rgba(80,60,35,.10);
+    --sh-3: 0 6px 16px rgba(42,39,36,.18), 0 20px 48px rgba(42,39,36,.22);
   }
   *{ box-sizing:border-box; }
   html,body{ margin:0; }
   body{
     background:
-      repeating-linear-gradient(180deg, transparent 0, transparent 33px, rgba(120,95,60,.045) 33px, rgba(120,95,60,.045) 34px),
+      repeating-linear-gradient(180deg, transparent 0, transparent 33px, rgba(120,95,60,.04) 33px, rgba(120,95,60,.04) 34px),
       radial-gradient(120% 80% at 50% -10%, var(--paper-2), var(--paper) 60%);
     color:var(--ink); font-family:var(--serif); -webkit-text-size-adjust:100%; line-height:1.5; min-height:100vh;
   }
-  .wrap{ max-width:880px; margin:0 auto; padding:18px 16px 80px; }
+  .wrap{ max-width:920px; margin:0 auto; padding:20px 18px 90px; }
 
-  header{ padding:6px 2px 12px; }
-  h1{ font-family:var(--display); font-weight:600; font-size:1.45rem; letter-spacing:.01em; margin:0; color:var(--charcoal); }
-  h1 .sub{ display:block; font-family:var(--mono); font-size:.72rem; font-weight:400; letter-spacing:.04em; color:var(--ink-soft); margin-top:5px; text-transform:uppercase; }
-  .howto{ font-size:.9rem; color:var(--ink-soft); margin:11px 2px 0; max-width:66ch; }
-  .howto b{ color:var(--ink); font-weight:600; }
-  .howto .mk{ color:var(--pencil); font-weight:700; }
-  .howto + .howto{ margin-top:6px; }
+  /* ===== EN-TÊTE ===== */
+  .app-head{ display:flex; align-items:center; gap:14px; padding:4px 0 6px; }
+  .brand-icon{
+    width:52px; height:52px; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    font-size:1.9rem; color:var(--card); background:linear-gradient(160deg, var(--pencil) 0%, #8f2c22 100%);
+    border-radius:var(--r-md); box-shadow:var(--sh-1); font-family:var(--display);
+  }
+  .brand{ flex:1 1 auto; min-width:0; }
+  h1{ font-family:var(--display); font-weight:700; font-size:1.5rem; letter-spacing:.01em; margin:0; color:var(--charcoal); line-height:1.15; }
+  .brand .sub{ display:block; font-family:var(--mono); font-size:.7rem; font-weight:400; letter-spacing:.06em; color:var(--ink-soft); margin-top:4px; text-transform:uppercase; }
+  .head-acts{ display:flex; gap:8px; flex:0 0 auto; }
+  .btn-chip{ min-height:40px; padding:0 14px; font-size:.88rem; border-radius:999px; border:1.5px solid var(--line); background:var(--card); color:var(--ink); box-shadow:var(--sh-1); }
+  .btn-chip:hover{ border-color:var(--pencil-soft); color:var(--pencil); }
 
-  .toolbar{ position:sticky; top:0; z-index:6; display:flex; gap:10px; padding:12px 0; margin:14px 0 4px;
-    background:linear-gradient(180deg, var(--paper) 72%, rgba(236,227,207,0)); }
-  button{ font-family:var(--display); font-size:1rem; cursor:pointer; border-radius:5px; min-height:48px; padding:0 16px;
-    border:1.5px solid var(--ink-soft); background:var(--panel); color:var(--ink);
-    transition:transform .06s ease, background .15s ease; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  .tagline{ font-size:.9rem; color:var(--ink-soft); margin:10px 2px 0; max-width:70ch; }
+  .tagline b{ color:var(--ink); }
+
+  /* ===== BOUTONS ===== */
+  button{ font-family:var(--display); font-size:1rem; cursor:pointer; border-radius:var(--r-sm); min-height:48px; padding:0 16px;
+    border:1.5px solid var(--line); background:var(--card); color:var(--ink);
+    transition:transform .06s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  button:hover{ border-color:var(--ink-faint); }
   button:active{ transform:translateY(1px); }
-  .btn-bar{ flex:1; }
-  .btn-primary{ border-color:var(--pencil); background:var(--pencil); color:#f7efe0; font-weight:600; }
-  .btn-primary .glyph{ font-weight:700; margin-right:4px; }
+  button:focus-visible{ outline:2px solid var(--pencil-soft); outline-offset:2px; }
+  .btn-primary{ border-color:#8f2c22; background:linear-gradient(180deg, var(--pencil) 0%, #a3341f 100%); color:#f9f1e2; font-weight:600; box-shadow:var(--sh-1); }
+  .btn-primary:hover{ border-color:#8f2c22; filter:brightness(1.06); }
+  .btn-primary .glyph{ font-weight:700; margin-right:6px; }
   .btn-ghost{ background:transparent; }
+  .btn-ghost:hover{ background:var(--card); }
 
-  .label-row{ display:flex; align-items:baseline; justify-content:space-between; margin:14px 2px 6px; }
-  .pane-label{ font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); }
-  .pane-label .em{ color:var(--pencil); }
+  .toolbar{ position:sticky; top:0; z-index:6; display:flex; gap:10px; padding:12px 0 14px; margin:16px 0 2px;
+    background:linear-gradient(180deg, var(--paper) 78%, rgba(239,231,214,0)); }
+  .btn-bar{ flex:1; box-shadow:var(--sh-1); }
+  #btnUndo{ flex:0 0 auto; min-width:52px; font-size:1.15rem; }
+  #btnUndo:disabled{ opacity:.35; cursor:default; }
+
+  /* ===== BULLES D'AIDE (?) ===== */
+  .hint{ display:inline-flex; align-items:center; justify-content:center; vertical-align:middle;
+    width:19px; height:19px; min-height:19px; margin-left:6px; padding:0; flex:0 0 auto;
+    border:1px solid var(--ink-faint); border-radius:50%; background:transparent;
+    font-family:var(--mono); font-size:.68rem; font-weight:700; color:var(--ink-soft); line-height:1; opacity:.75; }
+  .hint:hover{ opacity:1; color:var(--pencil); border-color:var(--pencil-soft); background:var(--pencil-bg); }
+  #helpPop{ position:absolute; z-index:60; max-width:300px; padding:11px 13px 12px; border:1px solid var(--line);
+    border-radius:var(--r-md); background:var(--card-hi); box-shadow:var(--sh-2); font-size:.85rem; line-height:1.55; color:var(--ink); display:none; }
+  #helpPop.on{ display:block; }
+  #helpPop .hp-t{ font-family:var(--display); font-weight:700; font-size:.88rem; color:var(--pencil); margin:0 0 4px; }
+  #helpPop .mk{ color:var(--pencil); font-weight:700; font-family:var(--mono); }
+  #helpPop b{ color:var(--charcoal); }
+
+  /* ===== PANNEAUX / ÉTAPES ===== */
+  .step-head{ display:flex; align-items:center; gap:9px; margin:22px 2px 8px; }
+  .step-num{ width:24px; height:24px; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    border-radius:50%; background:var(--charcoal); color:var(--paper); font-family:var(--mono); font-size:.74rem; font-weight:700; }
+  .step-t{ font-family:var(--display); font-weight:700; font-size:1.02rem; color:var(--charcoal); }
+  .step-sub{ font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); }
+  .step-head .spacer{ flex:1; }
+
   #flux{ width:100%; min-height:170px; resize:vertical; font-family:var(--serif); font-size:17px; line-height:1.75;
-    color:var(--ink); background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px;
-    box-shadow:inset 0 1px 3px rgba(80,60,35,.08); }
+    color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:var(--r-md); padding:14px 15px;
+    box-shadow:inset 0 1px 3px rgba(80,60,35,.09); }
   #flux:focus{ outline:2px solid var(--pencil-soft); outline-offset:1px; }
-  .counter{ font-family:var(--mono); font-size:.85rem; color:var(--ink-soft); margin:8px 2px 0; }
+  .counter{ font-family:var(--mono); font-size:.84rem; color:var(--ink-soft); margin:8px 2px 0; }
   .counter b{ color:var(--pencil); font-size:1.05rem; }
 
-  .grid-head{ border-top:1px solid var(--line); margin:22px 0 10px; padding-top:14px; }
-  .ctrl{ display:flex; flex-wrap:wrap; gap:16px 22px; align-items:flex-end; margin:0 2px 14px; }
-  .ctrl-grp{ display:flex; flex-direction:column; gap:5px; }
-  .ctrl-lbl{ font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
-  .seg{ display:inline-flex; border:1.5px solid var(--line); border-radius:6px; overflow:hidden; }
-  .seg button{ min-height:40px; padding:0 13px; border:0; border-radius:0; background:transparent; font-family:var(--display); font-size:.92rem; color:var(--ink-soft); border-left:1px solid var(--line); }
-  .seg button:first-child{ border-left:0; }
-  .seg button.on{ background:var(--charcoal); color:var(--paper); font-weight:600; }
+  /* ===== RÉGLAGES ===== */
+  .ctrl-card{ border:1px solid var(--line-soft); border-radius:var(--r-md); background:var(--panel); padding:14px 16px 15px; box-shadow:var(--sh-1); }
+  .ctrl{ display:flex; flex-wrap:wrap; gap:14px 26px; align-items:flex-end; }
+  .ctrl-grp{ display:flex; flex-direction:column; gap:6px; }
+  .ctrl-lbl{ font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); display:flex; align-items:center; }
+  .seg{ display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--paper-2); padding:3px; gap:2px; }
+  .seg button{ min-height:34px; padding:0 13px; border:0; border-radius:999px; background:transparent; font-family:var(--display); font-size:.9rem; color:var(--ink-soft); }
+  .seg button:hover{ color:var(--ink); }
+  .seg button.on{ background:var(--card-hi); color:var(--charcoal); font-weight:700; box-shadow:var(--sh-1); }
   #segAccid button{ font-size:1.05rem; min-width:42px; }
-  .stepper{ display:inline-flex; align-items:stretch; border:1.5px solid var(--line); border-radius:6px; overflow:hidden; }
-  .stepper button{ min-height:40px; min-width:42px; padding:0; border:0; border-radius:0; background:transparent; font-size:1.3rem; color:var(--ink); }
-  .stepper #capoVal{ display:inline-flex; align-items:center; justify-content:center; min-width:46px; font-family:var(--mono); font-size:1rem; font-weight:700; color:var(--pencil); border-left:1px solid var(--line); border-right:1px solid var(--line); }
+  .stepper{ display:inline-flex; align-items:stretch; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--card); }
+  .stepper button{ min-height:40px; min-width:44px; padding:0; border:0; border-radius:0; background:transparent; font-size:1.3rem; color:var(--ink); }
+  .stepper button:hover{ background:var(--pencil-bg); color:var(--pencil); }
+  .stepper #capoVal{ display:inline-flex; align-items:center; justify-content:center; min-width:46px; font-family:var(--mono); font-size:1rem; font-weight:700; color:var(--pencil); border-left:1px solid var(--line-soft); border-right:1px solid var(--line-soft); }
 
-  #grille{ margin-top:2px; }
-  .section{ margin:10px 0 18px; }
+  /* ===== GRILLE ===== */
+  #grille{ margin-top:10px; }
+  .empty-state{ border:1.5px dashed var(--line); border-radius:var(--r-md); background:var(--panel); padding:26px 20px; text-align:center; color:var(--ink-soft); font-size:.95rem; }
+  .section{ margin:14px 0 22px; }
   .sec-head{ display:flex; align-items:baseline; gap:10px; margin:0 0 3px 2px; }
-  .sec-head h3{ font-family:var(--display); font-weight:600; font-size:1.04rem; color:var(--ink); margin:0; }
-  .sec-head .count{ font-family:var(--mono); font-size:.72rem; color:var(--ink-soft); letter-spacing:.03em; }
-  .sec-ref{ font-family:var(--mono); font-size:.74rem; color:var(--ink-soft); margin:0 2px 8px; }
+  .sec-head h3{ font-family:var(--display); font-weight:700; font-size:1.06rem; color:var(--charcoal); margin:0; }
+  .sec-head .count{ font-family:var(--mono); font-size:.7rem; color:var(--ink-soft); letter-spacing:.03em; background:var(--paper-2); border-radius:999px; padding:2px 9px; }
+  .sec-ref{ font-family:var(--mono); font-size:.73rem; color:var(--ink-soft); margin:2px 2px 8px; }
   .sec-ref b{ color:var(--pencil); font-weight:700; }
 
   .measures-row{ display:flex; flex-wrap:wrap; align-items:stretch; gap:0; }
@@ -79,21 +125,24 @@
     background:linear-gradient(180deg,var(--pencil),var(--pencil-soft) 45%,var(--pencil)); box-shadow:0 0 1px rgba(178,57,44,.55); transform:rotate(.6deg); flex:0 0 auto; }
   .barline.section-start{ width:7px; margin:0 9px 0 0; background:none; border-left:3px solid var(--charcoal); border-right:2px solid var(--charcoal); transform:none; box-shadow:none; opacity:.7; }
 
-  .cell{ flex:1 1 156px; min-width:124px; background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:8px 9px 10px; margin:4px 0; display:flex; flex-direction:column; gap:6px; }
+  .cell{ flex:1 1 160px; min-width:128px; background:var(--card); border:1px solid var(--line-soft); border-radius:var(--r-sm); padding:9px 10px 10px; margin:4px 0; display:flex; flex-direction:column; gap:6px; box-shadow:var(--sh-1); transition:border-color .15s ease; }
+  .cell:hover{ border-color:var(--line); }
   .cell-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:6px; }
   .cell-top-l{ display:flex; align-items:center; gap:8px; flex:1 1 auto; min-width:0; flex-wrap:wrap; }
-  .cell .idx{ font-family:var(--mono); font-size:.7rem; font-weight:700; color:var(--pencil); letter-spacing:.06em; }
+  .cell .idx{ font-family:var(--mono); font-size:.68rem; font-weight:700; color:var(--pencil); letter-spacing:.06em; }
   .cell .frag{ font-family:var(--serif); font-size:1.02rem; color:var(--ink); word-break:break-word; }
-  .cell.tacet{ border-style:dashed; background:transparent; flex:0 1 134px; }
+  .cell.tacet{ border-style:dashed; background:transparent; box-shadow:none; flex:0 1 138px; }
   .cell.tacet .idx{ color:var(--ink-soft); }
   .cell.tacet .frag{ color:var(--ink-soft); font-style:italic; font-size:.88rem; display:flex; align-items:center; gap:6px; }
   .cell.tacet .frag::before{ content:"𝄽"; font-style:normal; font-size:1.1rem; line-height:1; color:var(--ink-soft); }
 
-  .del{ min-height:28px; min-width:30px; padding:0 6px; font-size:.8rem; line-height:1; border:1px solid var(--line); border-radius:5px; background:transparent; color:var(--ink-soft); flex:0 0 auto; }
-  .del:hover{ color:var(--pencil); border-color:var(--pencil-soft); }
+  .del{ min-height:28px; min-width:30px; padding:0 6px; font-size:.8rem; line-height:1; border:1px solid transparent; border-radius:5px; background:transparent; color:var(--ink-faint); flex:0 0 auto; }
+  .del:hover{ color:var(--pencil); border-color:var(--pencil-soft); background:var(--pencil-bg); }
 
-  .chord-chip{ min-height:30px; padding:2px 8px; border-radius:4px; border:1px solid var(--line); background:#f7efdd; font-family:var(--display); color:var(--charcoal); line-height:1.15; display:inline-flex; flex-direction:row; align-items:stretch; cursor:pointer; }
-  .chord-chip.empty{ color:var(--ink-soft); font-style:italic; font-size:.82rem; border-style:dashed; background:transparent; }
+  .chord-chip{ min-height:32px; padding:2px 9px; border-radius:var(--r-sm); border:1px solid var(--line); background:var(--card-hi); font-family:var(--display); color:var(--charcoal); line-height:1.15; display:inline-flex; flex-direction:row; align-items:stretch; cursor:pointer; box-shadow:var(--sh-1); }
+  .chord-chip:hover{ border-color:var(--pencil-soft); }
+  .chord-chip.empty{ color:var(--ink-soft); font-style:italic; font-size:.82rem; border-style:dashed; background:transparent; box-shadow:none; }
+  .chord-chip.empty:hover{ color:var(--pencil); }
   .ch-col{ display:flex; flex-direction:column; align-items:flex-start; padding:0 4px; }
   .ch-col:first-child{ padding-left:0; }
   .ch-div{ width:1px; background:var(--pencil-soft); margin:1px 3px; align-self:stretch; opacity:.6; }
@@ -101,65 +150,76 @@
   .ch-shape{ font-family:var(--mono); font-size:.68rem; color:var(--pencil-soft); }
   .ch-beat{ font-family:var(--mono); font-size:.58rem; color:var(--ink-soft); }
 
-  .chord-edit{ display:flex; flex-direction:column; gap:7px; width:100%; }
-  .chord-input{ font-family:var(--display); font-size:1rem; padding:7px 9px; border:1.5px solid var(--pencil-soft); border-radius:5px; background:#fff; color:var(--ink); width:100%; }
+  /* éditeur d'accord */
+  .chord-edit{ display:flex; flex-direction:column; gap:8px; width:100%; border:1px dashed var(--pencil-soft); border-radius:var(--r-sm); padding:8px; background:var(--pencil-bg); }
+  .ce-head{ display:flex; align-items:center; font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--pencil); }
+  .chord-input{ font-family:var(--display); font-size:1rem; padding:8px 10px; border:1.5px solid var(--pencil-soft); border-radius:var(--r-sm); background:#fff; color:var(--ink); width:100%; }
   .chord-input:focus{ outline:2px solid var(--pencil-soft); outline-offset:1px; }
   .chord-picks{ display:flex; flex-wrap:wrap; gap:5px; }
-  .pick{ min-height:34px; padding:0 10px; font-size:.9rem; font-family:var(--display); border:1px solid var(--line); border-radius:5px; background:var(--panel); color:var(--ink); }
+  .pick{ min-height:36px; padding:0 11px; font-size:.9rem; font-family:var(--display); border:1px solid var(--line); border-radius:var(--r-sm); background:var(--card); color:var(--ink); }
   .pick.add{ border-color:var(--charcoal); color:var(--charcoal); font-weight:600; }
   .pick.add.armed{ background:var(--charcoal); color:var(--paper); }
-  .pick.ok{ border-color:var(--pencil); background:var(--pencil); color:#f7efe0; font-weight:600; }
+  .pick.ok{ border-color:#8f2c22; background:var(--pencil); color:#f7efe0; font-weight:600; }
   .pick.clr{ color:var(--ink-soft); }
 
-  .footer-actions{ display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid var(--line); margin-top:26px; padding-top:18px; }
+  .footer-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
   .footer-actions button{ flex:1 1 auto; min-height:46px; font-size:.92rem; }
-  .legend{ font-size:.8rem; color:var(--ink-soft); margin:18px 2px 0; line-height:1.6; }
-  .legend .mk{ color:var(--pencil); font-weight:700; }
-  .legend b{ color:var(--ink); }
 
-  /* ÉTAGE 3 — voie rythmique */
-  .rhy{ margin-top:3px; border-top:1px dashed var(--line); padding-top:6px; cursor:pointer; display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; }
-  .rhy:hover{ background:rgba(178,57,44,.05); }
+  details.legend{ margin:22px 2px 0; border:1px solid var(--line-soft); border-radius:var(--r-md); background:var(--panel); padding:0; }
+  details.legend summary{ cursor:pointer; padding:11px 15px; font-family:var(--display); font-weight:600; font-size:.92rem; color:var(--ink); list-style:none; display:flex; align-items:center; gap:8px; }
+  details.legend summary::before{ content:"▸"; font-size:.8rem; color:var(--ink-soft); transition:transform .15s ease; }
+  details.legend[open] summary::before{ transform:rotate(90deg); }
+  details.legend summary::-webkit-details-marker{ display:none; }
+  .legend-body{ padding:0 15px 13px; font-size:.82rem; color:var(--ink-soft); line-height:1.7; }
+  .legend-body .mk{ color:var(--pencil); font-weight:700; }
+  .legend-body b{ color:var(--ink); }
+
+  /* ===== ÉTAGE 3 — voie rythmique ===== */
+  .rhy{ margin-top:3px; border-top:1px dashed var(--line-soft); padding-top:6px; cursor:pointer; display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; border-radius:4px; }
+  .rhy:hover{ background:var(--pencil-bg); }
   .rhy-arrows{ font-family:var(--mono); font-size:1.02rem; letter-spacing:.05em; color:var(--ink); line-height:1.25; }
   .rhy.def .rhy-arrows{ color:var(--ink-soft); }
-  .rhy-tag{ font-family:var(--mono); font-size:.62rem; color:var(--ink-soft); letter-spacing:.03em; }
+  .rhy-tag{ font-family:var(--mono); font-size:.6rem; color:var(--ink-faint); letter-spacing:.03em; }
+  .rhy-pen{ font-size:.68rem; color:var(--ink-faint); margin-left:auto; }
+  .rhy:hover .rhy-pen{ color:var(--pencil); }
   .rhy .v, .rhy-arrows .v, .fig-pick .v, .rhy-edit .v{ color:var(--ink-soft); }
 
-  .rhy-edit{ margin-top:6px; border-top:1px dashed var(--pencil-soft); padding-top:8px; display:flex; flex-direction:column; gap:8px; }
-  .rhy-edit-head{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
-  .rhy-edit-t{ font-family:var(--mono); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--pencil); }
+  .rhy-edit{ margin-top:6px; border:1px dashed var(--pencil-soft); border-radius:var(--r-sm); padding:8px; background:var(--pencil-bg); display:flex; flex-direction:column; gap:8px; }
+  .rhy-edit-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .rhy-edit-t{ font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--pencil); display:flex; align-items:center; }
   .rhy-fill{ font-family:var(--mono); font-size:.7rem; color:var(--ink-soft); }
   .rhy-fill.ok{ color:var(--pencil); font-weight:700; }
   .rhy-seq{ display:flex; flex-wrap:wrap; gap:6px; }
   .rhy-empty{ color:var(--ink-soft); font-style:italic; font-size:.82rem; }
-  .rhy-chipE{ display:flex; align-items:center; gap:5px; border:1px solid var(--line); border-radius:5px; padding:3px 6px; background:#f7efdd; }
+  .rhy-chipE{ display:flex; align-items:center; gap:5px; border:1px solid var(--line); border-radius:5px; padding:3px 6px; background:var(--card-hi); }
   .rhy-chipE-stave{ width:34px; flex:0 0 auto; }
   .rhy-chipE-nm{ font-family:var(--display); font-size:.8rem; color:var(--charcoal); white-space:nowrap; }
   .rhy-x{ min-height:24px; min-width:24px; padding:0 4px; font-size:.72rem; line-height:1; border:1px solid var(--line); border-radius:4px; background:transparent; color:var(--ink-soft); }
   .rhy-x:hover{ color:var(--pencil); border-color:var(--pencil-soft); }
   .rhy-acts{ display:flex; flex-wrap:wrap; gap:6px; }
-  .fig-lib{ border:1px solid var(--line); border-radius:6px; background:var(--panel); padding:8px 8px 4px; max-height:280px; overflow:auto; -webkit-overflow-scrolling:touch; }
-  .fig-lib-h{ font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px; }
+  .fig-lib{ border:1px solid var(--line); border-radius:var(--r-sm); background:var(--panel); padding:8px 8px 4px; max-height:280px; overflow:auto; -webkit-overflow-scrolling:touch; }
+  .fig-lib-h{ font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px; display:flex; align-items:center; }
   .fig-sec{ font-family:var(--display); font-weight:600; font-size:.82rem; color:var(--ink); margin:9px 0 4px; }
   .fig-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:6px; margin-bottom:4px; }
-  .fig-pick{ display:flex; align-items:center; gap:7px; text-align:left; min-height:46px; padding:4px 7px; border:1px solid var(--line); border-radius:5px; background:#fbf8f1; }
-  .fig-pick:active{ transform:translateY(1px); border-color:var(--pencil-soft); }
+  .fig-pick{ display:flex; align-items:center; gap:7px; text-align:left; min-height:46px; padding:4px 7px; border:1px solid var(--line); border-radius:5px; background:var(--card-hi); }
+  .fig-pick:hover{ border-color:var(--pencil-soft); }
+  .fig-pick:active{ transform:translateY(1px); }
   .fig-pick-stave{ width:42px; flex:0 0 auto; }
   .fig-pick-lab{ display:flex; flex-direction:column; line-height:1.12; min-width:0; }
   .fig-pick-lab b{ font-family:var(--display); font-weight:600; font-size:.8rem; color:var(--charcoal); }
   .fig-pick-lab span{ font-family:var(--mono); font-size:.82rem; color:var(--ink); }
 
-  /* MODULE IMPRESSION */
+  /* ===== MODULE IMPRESSION ===== */
   .pp{ display:none; }
-  .pp.open{ display:block; margin:18px 0; border:1px solid var(--line); border-radius:10px; background:var(--panel); padding:14px; }
+  .pp.open{ display:block; margin:18px 0; border:1px solid var(--line); border-radius:var(--r-lg); background:var(--panel); padding:14px; box-shadow:var(--sh-2); }
   .pp-bar{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
-  .pp-title{ font-family:var(--display); font-weight:600; font-size:1rem; color:var(--charcoal); margin-right:auto; }
+  .pp-title{ font-family:var(--display); font-weight:700; font-size:1rem; color:var(--charcoal); margin-right:auto; display:flex; align-items:center; }
   .pp-opts{ display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin-bottom:14px; padding-bottom:12px; border-bottom:1px dashed var(--line); }
   .pp-opts label{ display:inline-flex; align-items:center; gap:6px; font-size:.85rem; color:var(--ink); cursor:pointer; }
   .pp-opts input[type=checkbox]{ width:16px; height:16px; accent-color:var(--pencil); }
   .pp-dense{ display:inline-flex; align-items:center; gap:6px; font-size:.85rem; color:var(--ink); }
-  .pp-dense select{ font:inherit; padding:2px 6px; border:1px solid var(--line); border-radius:5px; background:var(--paper); color:var(--ink); }
-  .sheet{ background:#fff; color:#000; padding:8mm; border:1px solid var(--line); border-radius:6px; font-family:var(--display); }
+  .pp-dense select{ font:inherit; padding:3px 7px; border:1px solid var(--line); border-radius:5px; background:var(--card); color:var(--ink); }
+  .sheet{ background:#fff; color:#000; padding:8mm; border:1px solid var(--line); border-radius:var(--r-sm); font-family:var(--display); }
   .sheet-head{ text-align:center; margin-bottom:12px; border-bottom:2px solid #000; padding-bottom:8px; }
   .sheet-title{ font-size:1.7rem; font-weight:700; letter-spacing:.01em; }
   .sheet-sub{ font-family:var(--mono); font-size:.76rem; color:#444; margin-top:4px; }
@@ -176,13 +236,40 @@
   .bar-lyr{ font-size:.9rem; color:#000; line-height:1.32; margin-top:2px; }
   .bar.sil .bar-lyr{ color:#888; font-style:italic; }
 
+  /* ===== TOAST ===== */
+  #toast{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(16px); z-index:80;
+    background:var(--charcoal); color:var(--paper); font-family:var(--display); font-size:.92rem;
+    padding:10px 20px; border-radius:999px; box-shadow:var(--sh-2); opacity:0; pointer-events:none;
+    transition:opacity .22s ease, transform .22s ease; max-width:88vw; text-align:center; }
+  #toast.on{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ===== WIZARD ===== */
+  #wiz{ position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center; padding:18px;
+    background:rgba(42,39,36,.5); backdrop-filter:blur(2px); }
+  #wiz.on{ display:flex; }
+  .wiz-card{ width:100%; max-width:440px; background:var(--card-hi); border:1px solid var(--line); border-radius:var(--r-lg);
+    box-shadow:var(--sh-3); padding:24px 24px 18px; display:flex; flex-direction:column; gap:12px; }
+  .wiz-glyph{ font-size:2.3rem; line-height:1; }
+  .wiz-t{ font-family:var(--display); font-weight:700; font-size:1.22rem; color:var(--charcoal); margin:0; }
+  .wiz-b{ font-size:.94rem; line-height:1.65; color:var(--ink); margin:0; min-height:7.5em; }
+  .wiz-b .mk{ color:var(--pencil); font-weight:700; font-family:var(--mono); }
+  .wiz-b b{ color:var(--charcoal); }
+  .wiz-dots{ display:flex; gap:7px; justify-content:center; padding:2px 0; }
+  .wiz-dots span{ width:8px; height:8px; border-radius:50%; background:var(--line); transition:background .15s ease; }
+  .wiz-dots span.on{ background:var(--pencil); }
+  .wiz-acts{ display:flex; gap:8px; align-items:center; }
+  .wiz-acts .spacer{ flex:1; }
+  .wiz-skip{ border:none; background:none; color:var(--ink-soft); font-size:.85rem; min-height:40px; padding:0 8px; }
+  .wiz-skip:hover{ color:var(--pencil); }
+
   @media print{
     @page{ margin:14mm; }
     body{ background:#fff; margin:0; }
     .wrap{ max-width:none; margin:0; padding:0; }
     .wrap > *{ display:none !important; }
-    .wrap > #printPanel{ display:block !important; margin:0; padding:0; border:none; background:#fff; }
+    .wrap > #printPanel{ display:block !important; margin:0; padding:0; border:none; background:#fff; box-shadow:none; }
     #printPanel .pp-bar, #printPanel .pp-opts{ display:none !important; }
+    #helpPop, #toast, #wiz, .hint{ display:none !important; }
     .sheet{ border:none; border-radius:0; padding:0; }
     .sheet-section{ break-inside:auto; }
     .sheet-sech{ break-after:avoid; page-break-after:avoid; }
@@ -191,41 +278,67 @@
     .sheet.brk .sheet-section:first-of-type{ break-before:auto; page-break-before:auto; }
   }
 
-  @media (max-width:520px){ h1{ font-size:1.25rem; } .toolbar{ gap:8px; } .btn-bar{ padding:0 8px; font-size:.95rem; } .ctrl{ gap:12px 16px; } .fig-grid{ grid-template-columns:1fr 1fr; } .pp-opts{ gap:8px 12px; } .sheet{ padding:6mm; } .bar{ flex-basis:140px; } }
-  @media (prefers-reduced-motion:reduce){ button{ transition:none; } }
+  @media (max-width:560px){
+    h1{ font-size:1.22rem; }
+    .brand-icon{ width:44px; height:44px; font-size:1.6rem; }
+    .toolbar{ gap:8px; }
+    .btn-bar{ padding:0 8px; font-size:.95rem; }
+    .ctrl{ gap:12px 16px; }
+    .fig-grid{ grid-template-columns:1fr 1fr; }
+    .pp-opts{ gap:8px 12px; }
+    .sheet{ padding:6mm; }
+    .bar{ flex-basis:140px; }
+    .wiz-card{ padding:20px 18px 14px; }
+  }
+  @media (prefers-reduced-motion:reduce){ button, #toast, .seg button{ transition:none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <header>
-    <h1>Lead sheet Aziza <span class="sub">flux → grille → accords</span></h1>
-    <p class="howto">
-      <b>Découper</b> : curseur dans le flux, puis <span class="mk">│</span> pose une barre (au caractère près).
-      Section = barre double <span style="color:var(--charcoal)">‖</span> auto. Cellule en pointillés = <b>silence de la voix</b>.
-      <b>✕</b> sur une cellule supprime la mesure ; <i>Retirer la barre</i> fusionne (garde le texte).
-    </p>
-    <p class="howto">
-      <b>Accords</b> : tape sur une mesure pour poser son accord (stocké comme <b>réel</b> ; la forme capo en découle).
-      Bouton <b>+ accord</b> pour en mettre deux dans une mesure (partage égal, ou <span class="mk">Dm:1 La:3</span> pour les temps).
-      L'accord est écrit dans le flux (<span class="mk">{Dm}</span>) : il suit sa mesure même si tu recoupes.
-    </p>
+  <header class="app-head">
+    <div class="brand-icon">𝄞</div>
+    <div class="brand">
+      <h1>Aziza <span class="sub">Lead sheet · découpe → accords → rythme</span></h1>
+    </div>
+    <div class="head-acts">
+      <button id="btnGuide" class="btn-chip" title="Rouvrir le guide pas à pas">🎓 Guide</button>
+    </div>
   </header>
+  <p class="tagline">
+    Ton <b>texte</b> devient une <b>grille de mesures</b> : pose des accords, choisis le rythme, imprime la feuille.
+    Tout est <b>sauvegardé automatiquement</b> dans ce navigateur. Les petits <b>?</b> expliquent chaque fonction.
+  </p>
+
+  <div class="step-head">
+    <span class="step-num">1</span>
+    <span class="step-t">Texte &amp; découpe</span>
+    <span class="step-sub">— paroles, accords, barres</span>
+    <button class="hint" data-help="flux" aria-label="Aide : le texte source">?</button>
+  </div>
 
   <div class="toolbar">
     <button id="btnInsert" class="btn-bar btn-primary"><span class="glyph">│</span>Poser une barre</button>
     <button id="btnRemove" class="btn-bar btn-ghost">⌫ Retirer la barre</button>
+    <button id="btnUndo" class="btn-ghost" title="Annuler la dernière action (Ctrl+Z)" aria-label="Annuler la dernière action" disabled>↶</button>
+    <button class="hint" data-help="barres" aria-label="Aide : poser et retirer des barres" style="align-self:center">?</button>
   </div>
 
-  <div class="label-row"><span class="pane-label">le flux <span class="em">— accords + paroles, barres</span></span></div>
   <textarea id="flux" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
-  <div class="counter"><b id="count">0</b> mesures · <span id="secount">0</span> sections · <span id="sil">0</span> silence(s) voix · <span id="nch">0</span> accord(s)</div>
+  <div class="counter"><b id="count">0</b> mesures · <span id="secount">0</span> sections · <span id="sil">0</span> silence(s) voix · <span id="nch">0</span> accord(s)
+    <button class="hint" data-help="compteur" aria-label="Aide : les compteurs">?</button>
+  </div>
 
-  <div class="grid-head"><span class="pane-label">la grille <span class="em">— accords + paroles</span></span></div>
+  <div class="step-head">
+    <span class="step-num">2</span>
+    <span class="step-t">Réglages d'affichage</span>
+    <button class="hint" data-help="reglages" aria-label="Aide : les réglages">?</button>
+  </div>
 
+  <div class="ctrl-card">
   <div class="ctrl">
     <div class="ctrl-grp">
-      <span class="ctrl-lbl">Affichage</span>
+      <span class="ctrl-lbl">Affichage accords <button class="hint" data-help="affichage" aria-label="Aide : affichage des accords">?</button></span>
       <div class="seg" id="segDisp">
         <button data-mode="reel" class="on">Réel</button>
         <button data-mode="capo">Capo</button>
@@ -233,7 +346,7 @@
       </div>
     </div>
     <div class="ctrl-grp">
-      <span class="ctrl-lbl">Capo</span>
+      <span class="ctrl-lbl">Capo <button class="hint" data-help="capo" aria-label="Aide : le capo">?</button></span>
       <div class="stepper">
         <button id="capoMinus" aria-label="Capo moins">−</button>
         <span id="capoVal">5</span>
@@ -241,29 +354,43 @@
       </div>
     </div>
     <div class="ctrl-grp">
-      <span class="ctrl-lbl">Altérations</span>
+      <span class="ctrl-lbl">Altérations <button class="hint" data-help="alterations" aria-label="Aide : altérations">?</button></span>
       <div class="seg" id="segAccid">
         <button data-accid="b" class="on">♭</button>
         <button data-accid="d">♯</button>
       </div>
     </div>
     <div class="ctrl-grp">
-      <span class="ctrl-lbl">Rythme — 1ᵉʳ coup</span>
+      <span class="ctrl-lbl">Rythme — 1ᵉʳ coup <button class="hint" data-help="orientation" aria-label="Aide : sens du premier coup">?</button></span>
       <div class="seg" id="segOrient">
-        <button data-or="down" class="on">↓ bas</button>
+        <button data-or="down">↓ bas</button>
         <button data-or="up">↑ haut</button>
       </div>
     </div>
     <div class="ctrl-grp">
-      <span class="ctrl-lbl">Voie rythmique</span>
+      <span class="ctrl-lbl">Voie rythmique <button class="hint" data-help="voieRythmique" aria-label="Aide : la voie rythmique">?</button></span>
       <div class="seg" id="segRhy">
         <button data-rhy="1" class="on">afficher</button>
         <button data-rhy="0">masquer</button>
       </div>
     </div>
   </div>
+  </div>
+
+  <div class="step-head">
+    <span class="step-num">3</span>
+    <span class="step-t">La grille</span>
+    <span class="step-sub">— accords &amp; rythme, mesure par mesure</span>
+    <button class="hint" data-help="grille" aria-label="Aide : la grille">?</button>
+  </div>
 
   <div id="grille"></div>
+
+  <div class="step-head" style="margin-top:26px">
+    <span class="step-num">4</span>
+    <span class="step-t">Imprimer &amp; partager</span>
+    <button class="hint" data-help="actions" aria-label="Aide : imprimer et partager">?</button>
+  </div>
 
   <div class="footer-actions">
     <button id="btnPrint" class="btn-ghost">🖨 Imprimer / PDF</button>
@@ -274,32 +401,57 @@
 
   <div id="printPanel" class="pp">
     <div class="pp-bar">
-      <span class="pp-title">Aperçu impression</span>
+      <span class="pp-title">Aperçu impression <button class="hint" data-help="impression" aria-label="Aide : options d'impression">?</button></span>
       <button id="ppRefresh" class="btn-ghost" title="Rafraîchir l'aperçu">↻</button>
       <button id="ppPrint" class="btn-bar btn-primary">🖨 Imprimer / PDF</button>
       <button id="ppClose" class="btn-ghost">Fermer</button>
     </div>
     <div class="pp-opts">
-      <label><input type="checkbox" id="ppHdr" checked> En-tête</label>
-      <label><input type="checkbox" id="ppCapo" checked> Formes capo</label>
-      <label><input type="checkbox" id="ppReal"> Accords réel</label>
-      <label><input type="checkbox" id="ppLyr" checked> Paroles</label>
-      <label><input type="checkbox" id="ppRhy" checked> Flèches rythme</label>
-      <label><input type="checkbox" id="ppNum"> N° mesure</label>
-      <label><input type="checkbox" id="ppBreak"> Saut de page / section</label>
-      <span class="pp-dense">Mesures/ligne
+      <label title="Titre, tonalité, tempo et capo en haut de la feuille"><input type="checkbox" id="ppHdr" checked> En-tête</label>
+      <label title="Affiche les accords tels que tu les joues avec le capo"><input type="checkbox" id="ppCapo" checked> Formes capo</label>
+      <label title="Affiche les accords réels (hauteur réelle, sans capo)"><input type="checkbox" id="ppReal"> Accords réel</label>
+      <label title="Imprime les paroles sous chaque mesure"><input type="checkbox" id="ppLyr" checked> Paroles</label>
+      <label title="Imprime les flèches de rythme (↓ ↑) sous les accords"><input type="checkbox" id="ppRhy" checked> Flèches rythme</label>
+      <label title="Numérote chaque mesure (M1, M2…)"><input type="checkbox" id="ppNum"> N° mesure</label>
+      <label title="Commence chaque section sur une nouvelle page"><input type="checkbox" id="ppBreak"> Saut de page / section</label>
+      <span class="pp-dense" title="Nombre de mesures par ligne sur la feuille">Mesures/ligne
         <select id="ppDense"><option value="auto">auto</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
       </span>
     </div>
     <div id="sheet" class="sheet"></div>
   </div>
 
-  <p class="legend">
-    <span class="mk">│</span> barre · <span style="color:var(--charcoal)">‖</span> section · <span style="font-style:normal">𝄽</span> silence voix ·
-    <b>✕</b> supprimer la mesure · accord = <b>réel</b> et/ou <b>forme capo</b>.
-    <b>Voie rythmique</b> (guitare) sous chaque mesure : défaut <b>4 noires</b>, tape dessus pour piocher une figure FWB. Tout est sauvegardé dans ce navigateur.
-  </p>
+  <details class="legend">
+    <summary>Légende &amp; notation</summary>
+    <div class="legend-body">
+      <span class="mk">│</span> barre de mesure · <span style="color:var(--charcoal)">‖</span> début de section · <span style="font-style:normal">𝄽</span> silence de la voix ·
+      <b>✕</b> supprimer la mesure · accord = <b>réel</b> et/ou <b>forme capo</b>.<br>
+      <b>Voie rythmique</b> (guitare) sous chaque mesure : défaut <b>4 noires</b>, tape dessus pour piocher une figure FWB.
+      Flèches : <span class="mk">↓</span> coup vers le bas · <span class="mk">↑</span> coup vers le haut · <b>·</b> tenue · <b>–</b> silence · <b>—</b> référence solfège (pas de coup défini).<br>
+      Dans le texte : <span class="mk">[Section]</span> ouvre une section · <span class="mk">{Dm}</span> pose un accord · <span class="mk">{r: figures}</span> pose un rythme ·
+      <span class="mk">Dm:1 A:3</span> répartit deux accords sur les temps 1 et 3.
+      Tout est sauvegardé dans ce navigateur, rien n'est envoyé en ligne.
+    </div>
+  </details>
 
+</div>
+
+<div id="helpPop" role="tooltip"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<div id="wiz" role="dialog" aria-modal="true" aria-label="Guide de démarrage">
+  <div class="wiz-card">
+    <div class="wiz-glyph" id="wizGlyph">👋</div>
+    <h2 class="wiz-t" id="wizT"></h2>
+    <p class="wiz-b" id="wizB"></p>
+    <div class="wiz-dots" id="wizDots"></div>
+    <div class="wiz-acts">
+      <button class="wiz-skip" id="wizSkip">Passer le guide</button>
+      <span class="spacer"></span>
+      <button id="wizPrev" class="btn-ghost">← Précédent</button>
+      <button id="wizNext" class="btn-primary">Suivant →</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -318,39 +470,39 @@
     "{Dm}Et chaque semaine le même trajet, depuis Mons|{Gm}, ...3 ne pas rater le tram|{C}, ..2 ne pas rater le train|{A}",
     "",
     "[Refrain]",
-    "{Dm}A|{B\u266D}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment avancer|",
+    "{Dm}A|{B♭}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment avancer|",
     "",
     "[Couplet 2]",
-    "{Dm}Les problèmes de papier|{Gm}, tu n'as pas lâché, le stress du retour,|{C}l'heure à surveiller, pourtant devant nous|{F}, calme, précise entière, le solfège devenait simple|{B\u266D}, la note devenait lumière, une année en|{A}tière, à venir, à tenir, ... à rest|er.( heeeee)",
+    "{Dm}Les problèmes de papier|{Gm}, tu n'as pas lâché, le stress du retour,|{C}l'heure à surveiller, pourtant devant nous|{F}, calme, précise entière, le solfège devenait simple|{B♭}, la note devenait lumière, une année en|{A}tière, à venir, à tenir, ... à rest|er.( heeeee)",
     "",
     "[Pré-refrain (2)]",
-    "{Dm}Et chaque|{Gm}semaine le même trajet, depuis|{C}Mons,|{F}ne pas rater le tram|{B\u266D}ne pas rater le train|{A}",
+    "{Dm}Et chaque|{Gm}semaine le même trajet, depuis|{C}Mons,|{F}ne pas rater le tram|{B♭}ne pas rater le train|{A}",
     "",
     "[Refrain (2)]",
-    "{Dm}A|{B\u266D}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment avancer|",
+    "{Dm}A|{B♭}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment avancer|",
     "",
     "[Explication (pont)]",
-    "{Dm}Tu nous as fait comprendre autrement,|{B\u266D}la musique sans stress, le goût d'apprendre vraiment|{A}, on garde en nous ce que tu as semé|{Dm}grand professeur on ne t'oubliera pas, A|{B\u266D}ziza ...|{A}mmmmmm|{Dm}mmmmmm",
+    "{Dm}Tu nous as fait comprendre autrement,|{B♭}la musique sans stress, le goût d'apprendre vraiment|{A}, on garde en nous ce que tu as semé|{Dm}grand professeur on ne t'oubliera pas, A|{B♭}ziza ...|{A}mmmmmm|{Dm}mmmmmm",
     "",
     "[Refrain final]",
-    "{Dm}A|{B\u266D}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment continuer|...mmmmm",
+    "{Dm}A|{B♭}ziza, on a appris à écouter,|{A}ce que la musique avait à nous donner,|{Dm}Aziza, sans peur, sans forcer,|{A}tu nous as montré comment continuer|...mmmmm",
     "",
     "[Conclusion]",
-    "{Dm}Merci pour tout,|{B\u266D}..... A|{A}ziza, ..1 on est fiers de t'avoir ... connue|{Dm}"
+    "{Dm}Merci pour tout,|{B♭}..... A|{A}ziza, ..1 on est fiers de t'avoir ... connue|{Dm}"
   ].join("\n");
 
   var REF = {
-    "Intro":"Dm Gm C F", "Couplet 1":"Dm Gm C F B\u266D A", "Pré-refrain":"Dm Gm C A",
-    "Refrain":"Dm B\u266D A Dm", "Couplet 2":"Dm Gm C F B\u266D A  (à confirmer)",
-    "Pré-refrain (2)":"Dm Gm C A", "Refrain (2)":"Dm B\u266D A Dm",
-    "Explication (pont)":"Dm B\u266D A Dm  (motif refrain)", "Refrain final":"Dm B\u266D A Dm", "Conclusion":"B\u266D A Dm"
+    "Intro":"Dm Gm C F", "Couplet 1":"Dm Gm C F B♭ A", "Pré-refrain":"Dm Gm C A",
+    "Refrain":"Dm B♭ A Dm", "Couplet 2":"Dm Gm C F B♭ A  (à confirmer)",
+    "Pré-refrain (2)":"Dm Gm C A", "Refrain (2)":"Dm B♭ A Dm",
+    "Explication (pont)":"Dm B♭ A Dm  (motif refrain)", "Refrain final":"Dm B♭ A Dm", "Conclusion":"B♭ A Dm"
   };
 
-  var K_FLUX="aziza_decoupe_v3", K_SET="aziza_set_v1";
+  var K_FLUX="aziza_decoupe_v3", K_SET="aziza_set_v1", K_WIZ="aziza_wiz_v1";
 
   var ta=document.getElementById("flux"), grille=document.getElementById("grille");
   var countEl=document.getElementById("count"), secountEl=document.getElementById("secount"), silEl=document.getElementById("sil"), nchEl=document.getElementById("nch");
-  var btnInsert=document.getElementById("btnInsert"), btnRemove=document.getElementById("btnRemove");
+  var btnInsert=document.getElementById("btnInsert"), btnRemove=document.getElementById("btnRemove"), btnUndo=document.getElementById("btnUndo");
   var btnJSON=document.getElementById("btnJSON"), btnText=document.getElementById("btnText"), btnReset=document.getElementById("btnReset");
   var segDisp=document.getElementById("segDisp"), segAccid=document.getElementById("segAccid");
   var segOrient=document.getElementById("segOrient"), segRhy=document.getElementById("segRhy");
@@ -365,15 +517,115 @@
   function saveSet(){ try{ localStorage.setItem(K_SET, JSON.stringify({mode:mode,capo:capo,accid:accid,orient:orient,showRhy:showRhy})); }catch(e){} }
   function loadSet(){ try{ var v=localStorage.getItem(K_SET); if(v){ var s=JSON.parse(v); if(s.mode) mode=s.mode; if(typeof s.capo==="number") capo=s.capo; if(s.accid) accid=s.accid; if(s.orient) orient=s.orient; if(typeof s.showRhy==="boolean") showRhy=s.showRhy; } }catch(e){} }
 
+  // ===== TOAST =====
+  var toastEl=document.getElementById("toast"), toastTimer=null;
+  function toast(msg){
+    toastEl.textContent=msg; toastEl.classList.add("on");
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ toastEl.classList.remove("on"); }, 1900);
+  }
+
+  // ===== ANNULER (undo structurel) =====
+  var hist=[];
+  function pushHist(){ hist.push(ta.value); if(hist.length>60) hist.shift(); updateUndo(); }
+  function updateUndo(){ btnUndo.disabled=!hist.length; }
+  function doUndo(){
+    if(!hist.length) return;
+    ta.value=hist.pop(); editing=null; editingRhy=null;
+    save(); render(); updateUndo(); toast("Annulé ↶");
+  }
+  btnUndo.addEventListener("click", doUndo);
+  document.addEventListener("keydown", function(e){
+    if((e.ctrlKey||e.metaKey) && !e.shiftKey && (e.key==="z"||e.key==="Z")){
+      var a=document.activeElement;
+      if(a===ta || (a && (a.tagName==="INPUT"||a.tagName==="TEXTAREA"))) return; // undo natif dans les champs
+      e.preventDefault(); doUndo();
+    }
+  });
+
+  // ===== BULLES D'AIDE =====
+  var HELP={
+    flux:{t:"Le texte source", b:"Ce champ est la <b>source de vérité</b> : tout part de lui. Une ligne <span class='mk'>[Nom]</span> ouvre une section (couplet, refrain…). Dans une ligne, chaque <span class='mk'>|</span> sépare deux mesures. La grille en dessous se met à jour à chaque frappe."},
+    barres:{t:"Poser / retirer une barre", b:"Place ton curseur dans le texte à l'endroit voulu, puis <b>Poser une barre</b> coupe la mesure au caractère près. <b>Retirer la barre</b> fusionne la mesure avec celle de gauche (le texte est conservé, l'accord et le rythme de gauche sont gardés). <b>↶</b> annule la dernière action (Ctrl+Z)."},
+    compteur:{t:"Les compteurs", b:"Un bilan en direct de ta grille : nombre de <b>mesures</b>, de <b>sections</b>, de mesures où la voix se tait (<b>silences</b>) et de mesures portant un <b>accord</b>."},
+    reglages:{t:"Réglages d'affichage", b:"Ces réglages changent seulement <b>ce que tu vois</b> (et ce qui s'imprime) — ils ne modifient jamais ta chanson. Ils sont mémorisés dans ce navigateur."},
+    affichage:{t:"Réel, capo, ou les deux", b:"<b>Réel</b> : l'accord entendu (hauteur réelle). <b>Capo</b> : la forme que ta main joue avec le capo (ex. avec capo V, un Dm réel se joue comme un Am). <b>Les deux</b> : le réel en grand, la forme capo en petit dessous."},
+    capo:{t:"Le capo", b:"Indique la case où tu poses ton capo (0 = pas de capo). L'app calcule automatiquement les <b>formes d'accords</b> à jouer. Pour Aziza : capo V, formes de Am."},
+    alterations:{t:"♭ ou ♯", b:"Choisis comment écrire les notes altérées : en <b>bémols</b> (Si♭) ou en <b>dièses</b> (La♯). C'est la même note, seule l'écriture change — question de préférence de lecture."},
+    orientation:{t:"Sens du premier coup", b:"Pour le strumming : le premier coup de chaque figure part-il vers le <b>bas ↓</b> ou vers le <b>haut ↑</b> ? Ne concerne que les figures binaires ; les références solfège (—) ne changent pas."},
+    voieRythmique:{t:"La voie rythmique", b:"La ligne de flèches sous chaque mesure : c'est le <b>rythme de la main droite</b> (guitare). <b>Masquer</b> l'enlève de l'écran si tu veux te concentrer sur les accords — rien n'est perdu."},
+    grille:{t:"La grille", b:"Chaque carte est une <b>mesure</b>. Tape sur <b>+ accord</b> (ou sur l'accord existant) pour le modifier ; tape sur la <b>ligne de flèches</b> pour changer le rythme ; <b>✕</b> supprime la mesure. Une carte en pointillés = la voix se tait."},
+    chordEditor:{t:"Poser un accord", b:"Tape l'accord au clavier ou choisis-en un dans la liste. <b>+ accord</b> permet d'en mettre un deuxième dans la même mesure (partage égal des temps, ou précise-les : <span class='mk'>Dm:1 A:3</span> = Dm au temps 1, A au temps 3). Écris toujours l'accord <b>réel</b> : la forme capo est calculée. <b>Entrée</b> valide, <b>Échap</b> annule."},
+    rhyEditor:{t:"Choisir le rythme", b:"Empile des figures depuis la bibliothèque : elles s'ajoutent <b>à droite</b>. <b>✕</b> retire une figure, <b>↻ 4 noires</b> revient au rythme par défaut. L'indicateur <b>appui X/4</b> compte les temps remplis — un guide, pas une contrainte."},
+    appui:{t:"L'indicateur appui X/4", b:"La somme des durées des figures posées dans la mesure. <b>4/4</b> = la mesure est exactement remplie (il s'affiche alors en rouge). Tu peux dépasser ou rester en dessous : c'est un repère, pas un blocage."},
+    figLib:{t:"La bibliothèque de figures", b:"Cinq familles : <b>notes</b>, <b>silences</b>, <b>groupements binaires</b> (avec flèches ↓↑ de strumming), <b>ternaires</b> et <b>divisions artificielles</b>. Ces deux dernières s'affichent <b>—</b> : références de solfège, sans sens de coup défini."},
+    actions:{t:"Imprimer & partager", b:"<b>Imprimer / PDF</b> ouvre un aperçu propre avec options, puis l'impression du navigateur (choisis « Enregistrer en PDF » pour un fichier). <b>Copier (JSON)</b> et <b>Copier (texte)</b> mettent toute la grille dans le presse-papiers. <b>Repartir d'Aziza</b> restaure la chanson d'origine."},
+    impression:{t:"Options d'impression", b:"Coche ce qui doit figurer sur la feuille : en-tête, formes capo et/ou accords réels, paroles, flèches de rythme, numéros de mesure. <b>Saut de page / section</b> commence chaque section sur une nouvelle page ; <b>mesures/ligne</b> force la densité."}
+  };
+  var helpPop=document.getElementById("helpPop"), helpFor=null;
+  function mkHint(topic, label){
+    var b=document.createElement("button"); b.className="hint"; b.type="button";
+    b.setAttribute("data-help", topic); b.setAttribute("aria-label", label||"Aide"); b.textContent="?";
+    return b;
+  }
+  function showHelp(btn){
+    var topic=btn.getAttribute("data-help"), h=HELP[topic]; if(!h) return;
+    helpPop.innerHTML="<p class='hp-t'>"+h.t+"</p>"+h.b;
+    helpPop.classList.add("on"); helpFor=btn;
+    var r=btn.getBoundingClientRect(), sx=window.scrollX||window.pageXOffset, sy=window.scrollY||window.pageYOffset;
+    helpPop.style.left="0px"; helpPop.style.top="0px"; // reset pour mesurer
+    var w=helpPop.offsetWidth, maxX=document.documentElement.clientWidth-w-10;
+    var x=Math.max(10, Math.min(r.left+sx-10, maxX+sx));
+    helpPop.style.left=x+"px"; helpPop.style.top=(r.bottom+sy+8)+"px";
+  }
+  function hideHelp(){ helpPop.classList.remove("on"); helpFor=null; }
+  document.addEventListener("click", function(e){
+    var h=e.target.closest(".hint");
+    if(h){ e.preventDefault(); if(helpFor===h){ hideHelp(); } else { showHelp(h); } return; }
+    if(!e.target.closest("#helpPop")) hideHelp();
+  });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") hideHelp(); });
+  window.addEventListener("scroll", function(){ if(helpFor) hideHelp(); }, {passive:true});
+
+  // ===== WIZARD =====
+  var WSTEPS=[
+    {g:"👋", t:"Bienvenue !", b:"Cette app transforme un <b>texte de chanson</b> en <b>lead sheet</b> : une grille de mesures avec accords et rythme, prête à imprimer. Ce petit guide fait le tour en cinq étapes — tu peux le rouvrir à tout moment avec le bouton <b>🎓 Guide</b>."},
+    {g:"✂️", t:"1 · Découpe ton texte", b:"En haut, le <b>texte source</b> : une ligne <span class='mk'>[Refrain]</span> ouvre une section, chaque <span class='mk'>|</span> sépare deux mesures. Place ton curseur dans le texte et tape <b>Poser une barre</b> pour couper une mesure exactement où tu veux. <b>↶</b> annule si tu te trompes."},
+    {g:"🎸", t:"2 · Pose tes accords", b:"Dans la grille, tape sur <b>+ accord</b> dans une mesure. Écris l'accord <b>réel</b> (ex. Dm) : l'app calcule toute seule la <b>forme capo</b> que ta main doit jouer. L'accord reste collé à sa mesure, même si tu redécoupes le texte ensuite."},
+    {g:"🥁", t:"3 · Choisis le rythme", b:"Sous chaque mesure, la ligne de flèches <span class='mk'>↓ ↑</span> est le <b>rythme de strumming</b> (4 noires par défaut). Tape dessus pour ouvrir la bibliothèque et empiler des figures. L'indicateur <b>appui X/4</b> te dit si la mesure est remplie."},
+    {g:"🖨", t:"4 · Imprime ta feuille", b:"Le bouton <b>Imprimer / PDF</b> prépare une feuille propre : choisis ce qui apparaît (accords, paroles, flèches…), puis imprime ou enregistre en PDF. <b>Copier</b> exporte la grille en texte ou en JSON."},
+    {g:"💾", t:"Tout est sauvegardé", b:"Chaque modification est <b>enregistrée automatiquement</b> dans ce navigateur — rien n'est envoyé en ligne. <b>Repartir d'Aziza</b> restaure la chanson d'origine si besoin. Et au moindre doute, tape sur un petit <b>?</b> : chaque fonction a sa bulle d'explication. Bonne musique !"}
+  ];
+  var wiz=document.getElementById("wiz"), wizT=document.getElementById("wizT"), wizB=document.getElementById("wizB"),
+      wizGlyph=document.getElementById("wizGlyph"), wizDots=document.getElementById("wizDots"),
+      wizPrev=document.getElementById("wizPrev"), wizNext=document.getElementById("wizNext"), wizSkip=document.getElementById("wizSkip");
+  var wstep=0;
+  function wizRender(){
+    var s=WSTEPS[wstep];
+    wizGlyph.textContent=s.g; wizT.textContent=s.t; wizB.innerHTML=s.b;
+    wizDots.innerHTML="";
+    WSTEPS.forEach(function(_,i){ var d=document.createElement("span"); if(i===wstep) d.className="on"; wizDots.appendChild(d); });
+    wizPrev.style.visibility=wstep===0?"hidden":"visible";
+    wizNext.textContent=wstep===WSTEPS.length-1?"C'est parti !":"Suivant →";
+  }
+  function wizOpen(){ wstep=0; wizRender(); wiz.classList.add("on"); }
+  function wizClose(){ wiz.classList.remove("on"); try{ localStorage.setItem(K_WIZ,"1"); }catch(e){} }
+  wizNext.addEventListener("click", function(){ if(wstep<WSTEPS.length-1){ wstep++; wizRender(); } else wizClose(); });
+  wizPrev.addEventListener("click", function(){ if(wstep>0){ wstep--; wizRender(); } });
+  wizSkip.addEventListener("click", wizClose);
+  wiz.addEventListener("click", function(e){ if(e.target===wiz) wizClose(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape" && wiz.classList.contains("on")) wizClose(); });
+  document.getElementById("btnGuide").addEventListener("click", wizOpen);
+
   // moteur d'accords
   var SHARP=["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
   var FLAT =["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
   var LPC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-  function pretty(s){ return s.replace(/#/g,"\u266F").replace(/b/g,"\u266D"); }
+  function pretty(s){ return s.replace(/#/g,"♯").replace(/b/g,"♭"); }
   function parseTok(tok){
-    var m=tok.match(/^([A-G])([#\u266Fb\u266D]?)(.*)$/); if(!m) return null;
+    var m=tok.match(/^([A-G])([#♯b♭]?)(.*)$/); if(!m) return null;
     var pc=LPC[m[1]];
-    if(m[2]==="#"||m[2]==="\u266F") pc=(pc+1)%12; else if(m[2]==="b"||m[2]==="\u266D") pc=(pc+11)%12;
+    if(m[2]==="#"||m[2]==="♯") pc=(pc+1)%12; else if(m[2]==="b"||m[2]==="♭") pc=(pc+11)%12;
     return { pc:pc, rest:m[3] };
   }
   function fmtTok(tok, semis){ var p=parseTok(tok); if(!p) return tok; var pc=((p.pc+semis)%12+12)%12; return pretty((accid==="d"?SHARP[pc]:FLAT[pc]))+p.rest; }
@@ -479,8 +731,8 @@
   function rhyArrowsTxt(arr){ return rhyArrows(arr).replace(/<[^>]+>/g,''); }
   function rhyFill(arr){ var s=0; arr.forEach(function(k){ if(FIGURES[k]) s+=FIGURES[k].dur; }); return Math.round(s*1000)/1000; }
   function figLabel(arr){ if(!arr.length) return '(vide)'; var same=arr.every(function(k){return k===arr[0];});
-    if(same) return (FIGURES[arr[0]]?FIGURES[arr[0]].nm:arr[0])+(arr.length>1?' \u00d7'+arr.length:''); 
-    return arr.map(function(k){return FIGURES[k]?FIGURES[k].nm:k;}).join(' \u00b7 '); }
+    if(same) return (FIGURES[arr[0]]?FIGURES[arr[0]].nm:arr[0])+(arr.length>1?' ×'+arr.length:'');
+    return arr.map(function(k){return FIGURES[k]?FIGURES[k].nm:k;}).join(' · '); }
 
   // un segment peut porter, en tête, plusieurs {…} : {accord} et/ou {r: figures}
   function parseSeg(seg){
@@ -496,6 +748,7 @@
   function buildSeg(chordStr, rhythmStr, lyric){ return (chordStr?'{'+chordStr+'}':'')+(rhythmStr?'{r: '+rhythmStr+'}':'')+lyric; }
 
   function setRhythm(m, arr){
+    pushHist();
     var rhythmStr=isDefaultRhy(arr)?'':arr.join(' ');
     var L=linesOf(), segs=L[m.lineIndex].split('|'), ps=parseSeg(segs[m.segIndex]);
     segs[m.segIndex]=buildSeg(ps.chordStr, rhythmStr, ps.lyric); L[m.lineIndex]=segs.join('|');
@@ -505,9 +758,12 @@
   function buildRhyEditor(m){
     var wrap=el('div','rhy-edit');
     var head=el('div','rhy-edit-head');
-    head.appendChild(el('span','rhy-edit-t','Rythme · M'+m.idx+' · voie guitare'));
+    var tt=el('span','rhy-edit-t','Rythme · M'+m.idx+' · voie guitare');
+    tt.appendChild(mkHint('rhyEditor','Aide : choisir le rythme'));
+    head.appendChild(tt);
     var fill=rhyFill(m.rhythm);
     var fEl=el('span','rhy-fill'+(Math.abs(fill-4)<0.001?' ok':''), 'appui '+fill+'/4');
+    fEl.appendChild(mkHint('appui','Aide : indicateur appui'));
     head.appendChild(fEl); wrap.appendChild(head);
 
     var seq=el('div','rhy-seq');
@@ -528,7 +784,10 @@
     var done=el('button','pick ok','✓ fermer'); done.addEventListener('click', function(){ editingRhy=null; render(); });
     acts.appendChild(reset); acts.appendChild(clear); acts.appendChild(done); wrap.appendChild(acts);
 
-    var lib=el('div','fig-lib'); lib.appendChild(el('div','fig-lib-h','Ajouter une figure (s\u2019empile à droite)'));
+    var lib=el('div','fig-lib');
+    var libH=el('div','fig-lib-h','Ajouter une figure (s’empile à droite)');
+    libH.appendChild(mkHint('figLib','Aide : la bibliothèque de figures'));
+    lib.appendChild(libH);
     FIGSECTIONS.forEach(function(sec){
       lib.appendChild(el('div','fig-sec', sec.t));
       var grid=el('div','fig-grid');
@@ -554,12 +813,14 @@
   [btnInsert,btnRemove].forEach(function(b){ b.addEventListener("pointerdown", function(e){ e.preventDefault(); }); });
 
   function insertBar(){
+    pushHist();
     var s=curStart(), e=curEnd(), v=ta.value;
     ta.value=v.slice(0,s)+"|"+v.slice(e); var pos=s+1; ta.setSelectionRange(pos,pos); lastStart=lastEnd=pos; ta.focus(); save(); render();
   }
   function removeBar(){
     var s=curStart(), v=ta.value;
     var i=v.lastIndexOf("|", s-1); if(i===-1) i=v.indexOf("|", s); if(i===-1) return;
+    pushHist();
     var after=v.slice(i+1);
     var mt; while((mt=after.match(/^\s*\{[^}]*\}/))){ after=after.slice(mt[0].length); } // fusion : on garde accord+rythme de gauche
     ta.value=v.slice(0,i)+after; ta.setSelectionRange(i,i); lastStart=lastEnd=i; ta.focus(); save(); render();
@@ -590,21 +851,32 @@
   function setFlux(L){ ta.value=L.join("\n"); save(); render(); }
 
   function setChord(m, chordStr){
+    pushHist();
     chordStr=(chordStr||"").replace(/\s+/g," ").replace(/^\s*([a-g])/, function(s){ return s.toUpperCase(); }).trim();
     var L=linesOf(), segs=L[m.lineIndex].split("|"), ps=parseSeg(segs[m.segIndex]);
     segs[m.segIndex]=buildSeg(chordStr, ps.rhythmStr, ps.lyric); L[m.lineIndex]=segs.join("|");
     editing=null; setFlux(L);
   }
   function deleteMeasure(m){
+    pushHist();
     var L=linesOf(), segs=L[m.lineIndex].split("|");
     if(segs.length<=1){ L.splice(m.lineIndex,1); }
     else { segs.splice(m.segIndex,1); L[m.lineIndex]=segs.join("|"); }
     editing=null; setFlux(L);
+    toast("Mesure supprimée — ↶ pour annuler");
   }
 
   function render(){
     var data=parse(ta.value), frag=document.createDocumentFragment();
     var total=0, silences=0, nch=0; focusAfter=null; appendNext=false;
+
+    if(!data.length){
+      var es=el("div","empty-state");
+      es.innerHTML="La grille est vide.<br>Tape ou colle ton texte ci-dessus : une ligne <b>[Nom de section]</b> pour commencer une section, puis tes paroles — chaque <b style='color:var(--pencil)'>|</b> séparera deux mesures.";
+      grille.innerHTML=""; grille.appendChild(es);
+      countEl.textContent=0; secountEl.textContent=0; silEl.textContent=0; nchEl.textContent=0;
+      return;
+    }
 
     data.forEach(function(sec){
       var secEl=el("div","section");
@@ -621,11 +893,15 @@
 
         if(editing===m.idx){
           var box=el("div","chord-edit");
+          var ceh=el("div","ce-head","Accord · M"+m.idx);
+          ceh.appendChild(mkHint('chordEditor','Aide : poser un accord'));
+          box.appendChild(ceh);
           var inp=el("input","chord-input"); inp.type="text"; inp.value=m.chordStr;
           inp.setAttribute("autocapitalize","off"); inp.setAttribute("autocomplete","off");
+          inp.setAttribute("placeholder","ex. Dm — ou Dm:1 A:3");
           inp.addEventListener("keydown", function(e){ if(e.key==="Enter") setChord(m,inp.value); else if(e.key==="Escape"){ editing=null; render(); } });
           var picks=el("div","chord-picks");
-          ["Dm","Gm","C","F","B\u266D","A","Em","E"].forEach(function(c){
+          ["Dm","Gm","C","F","B♭","A","Em","E"].forEach(function(c){
             var b=el("button","pick",c);
             b.addEventListener("pointerdown", function(e){ e.preventDefault(); });
             b.addEventListener("click", function(){
@@ -636,15 +912,17 @@
             picks.appendChild(b);
           });
           var addB=el("button","pick add","+ accord");
+          addB.title="Ajouter un second accord dans la même mesure";
           addB.addEventListener("pointerdown", function(e){ e.preventDefault(); });
           addB.addEventListener("click", function(){ appendNext=true; addB.classList.add("armed"); inp.focus(); });
-          var ok=el("button","pick ok","✓"); ok.addEventListener("click", function(){ setChord(m,inp.value); });
+          var ok=el("button","pick ok","✓ Valider"); ok.addEventListener("click", function(){ setChord(m,inp.value); });
           var clr=el("button","pick clr","✕ vider"); clr.addEventListener("click", function(){ setChord(m,""); });
           picks.appendChild(addB); picks.appendChild(ok); picks.appendChild(clr);
           box.appendChild(inp); box.appendChild(picks); topL.appendChild(box);
           focusAfter=inp;
         } else {
           var chip=el("button","chord-chip"+(m.chords.length?"":" empty"));
+          chip.title=m.chords.length?"Modifier l'accord de la mesure M"+m.idx:"Poser un accord sur la mesure M"+m.idx;
           if(!m.chords.length){ chip.textContent="+ accord"; }
           else {
             m.chords.forEach(function(tok,ci){
@@ -663,7 +941,7 @@
         top.appendChild(topL);
 
         if(editing!==m.idx){
-          var del=el("button","del","✕"); del.setAttribute("aria-label","Supprimer la mesure M"+m.idx);
+          var del=el("button","del","✕"); del.setAttribute("aria-label","Supprimer la mesure M"+m.idx); del.title="Supprimer la mesure M"+m.idx;
           del.addEventListener("click", function(){
             if(!m.silence && m.text.length>0){
               if(!confirm("Supprimer la mesure M"+m.idx+" (« "+m.text.slice(0,40)+(m.text.length>40?"…":"")+" ») ?")) return;
@@ -679,9 +957,11 @@
             cell.appendChild(buildRhyEditor(m));
           } else {
             var rhy=el("div","rhy"+(isDefaultRhy(m.rhythm)?" def":""));
+            rhy.title="Modifier le rythme de la mesure M"+m.idx;
             var arrEl=el("div","rhy-arrows"); arrEl.innerHTML=rhyArrows(m.rhythm);
             rhy.appendChild(arrEl);
             rhy.appendChild(el("span","rhy-tag", isDefaultRhy(m.rhythm)?"4 noires":figLabel(m.rhythm)));
+            rhy.appendChild(el("span","rhy-pen","✎"));
             rhy.addEventListener("click", function(){ editingRhy=m.idx; editing=null; render(); });
             cell.appendChild(rhy);
           }
@@ -709,7 +989,7 @@
   capoMinus.addEventListener("click", function(){ setCapo(capo-1); }); capoPlus.addEventListener("click", function(){ setCapo(capo+1); });
 
   function fallbackCopy(str,cb){ var t=document.createElement("textarea"); t.value=str; t.style.position="fixed"; t.style.opacity="0"; document.body.appendChild(t); t.focus(); t.select(); try{ document.execCommand("copy"); }catch(e){} t.remove(); if(cb) cb(); }
-  function copy(str,btn,msg){ var o=btn.textContent; var done=function(){ btn.textContent=msg; setTimeout(function(){ btn.textContent=o; },1200); };
+  function copy(str,btn,msg){ var done=function(){ toast(msg); };
     if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(str).then(done).catch(function(){ fallbackCopy(str,done); }); } else fallbackCopy(str,done); }
 
   btnJSON.addEventListener("click", function(){
@@ -722,17 +1002,17 @@
         return out;
       }) };
     });
-    copy(JSON.stringify({ song:"Aziza", capo:capo, sections:data }, null, 2), btnJSON, "JSON copié");
+    copy(JSON.stringify({ song:"Aziza", capo:capo, sections:data }, null, 2), btnJSON, "JSON copié dans le presse-papiers ✓");
   });
   btnText.addEventListener("click", function(){
     var data=parse(ta.value), out="";
     data.forEach(function(s){ out+="["+s.name+"]\n";
       s.measures.forEach(function(m){ var ch=m.chords.length?"["+m.chords.map(function(t){ return fmtCT(t,0); }).join(" ")+"] ":""; out+="M"+m.idx+" | "+ch+(m.silence?"(silence voix)":m.text)+"\n";
-        out+="     \u266a "+rhyArrowsTxt(m.rhythm)+"   ["+m.rhythm.join(" ")+"]\n"; });
+        out+="     ♪ "+rhyArrowsTxt(m.rhythm)+"   ["+m.rhythm.join(" ")+"]\n"; });
       out+="\n"; });
-    copy(out.replace(/\s+$/,""), btnText, "Texte copié");
+    copy(out.replace(/\s+$/,""), btnText, "Texte copié dans le presse-papiers ✓");
   });
-  btnReset.addEventListener("click", function(){ if(confirm("Repartir du flux Aziza par défaut ? Tes modifications (coupes et accords) seront effacées.")){ ta.value=AZIZA; editing=null; save(); render(); ta.focus(); } });
+  btnReset.addEventListener("click", function(){ if(confirm("Repartir du flux Aziza par défaut ? Tes modifications (coupes et accords) seront effacées.")){ pushHist(); ta.value=AZIZA; editing=null; save(); render(); ta.focus(); toast("Chanson d'origine restaurée — ↶ pour annuler"); } });
 
   // ===== MODULE IMPRESSION =====
   var printPanel=document.getElementById("printPanel"), sheetEl=document.getElementById("sheet");
@@ -742,8 +1022,8 @@
     var realOn=ppReal.checked, capoOn=ppCapo.checked, lyrOn=ppLyr.checked, rhyOn=ppRhy.checked, numOn=ppNum.checked, hdrOn=ppHdr.checked, dense=ppDense.value;
     sheetEl.className="sheet"+(ppBreak.checked?" brk":""); sheetEl.innerHTML="";
     if(hdrOn){ var h=el("div","sheet-head"); h.appendChild(el("div","sheet-title","Aziza"));
-      var sub=["Ré mineur","\u2669=140","4/4"]; if(capoOn) sub.push("Capo "+capo+" \u2014 formes Am");
-      h.appendChild(el("div","sheet-sub", sub.join("   \u00b7   "))); sheetEl.appendChild(h); }
+      var sub=["Ré mineur","♩=140","4/4"]; if(capoOn) sub.push("Capo "+capo+" — formes Am");
+      h.appendChild(el("div","sheet-sub", sub.join("   ·   "))); sheetEl.appendChild(h); }
     parse(ta.value).forEach(function(s){
       var sec=el("section","sheet-section"); sec.appendChild(el("h3","sheet-sech", s.name));
       var bars=el("div","sheet-bars"+(dense!=="auto"?" grid":""));
@@ -780,7 +1060,11 @@
   Array.prototype.forEach.call(segOrient.querySelectorAll("button"), function(x){ x.classList.toggle("on", x.getAttribute("data-or")===orient); });
   Array.prototype.forEach.call(segRhy.querySelectorAll("button"), function(x){ x.classList.toggle("on", (x.getAttribute("data-rhy")==="1")===showRhy); });
   ppRhy.checked=showRhy; // l'aperçu reflète la visibilité du rythme à l'écran
-  syncSel(); render();
+  syncSel(); render(); updateUndo();
+
+  // wizard au premier lancement
+  var seen=false; try{ seen=localStorage.getItem(K_WIZ)==="1"; }catch(e){}
+  if(!seen) wizOpen();
 })();
 </script>
 </body>
