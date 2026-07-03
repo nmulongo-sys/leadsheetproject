@@ -3,7 +3,7 @@
 Éditeur de *lead sheet* (grille d'accords + paroles + rythme pour guitaristes) à fichier unique, hors-ligne, pensé pour le mobile. Livré préchargé avec la chanson **Aziza**, mais le moteur accepte n'importe quel flux.
 
 **En ligne** : ouvrir `decoupe_mesures_aziza.html` dans un navigateur — aucune installation. Si hébergé sur GitHub Pages : `https://nmulongo-sys.github.io/leadsheetproject/`.
-**Statut** : révision 2026-07-02 (v2 — refonte UI) • fichier HTML unique, sans dépendance externe, fonctionne hors ligne et sur Android.
+**Statut** : révision 2026-07-03 (*theme-ready* portail ; v2 — refonte UI) • fichier HTML unique, sans dépendance externe, fonctionne hors ligne et sur Android.
 
 ## Utilisation
 
@@ -50,7 +50,17 @@ Cœur de la reprise : une session ultérieure doit pouvoir continuer sans que le
 
 **Chanson embarquée par défaut.** *Aziza* — ré mineur, ♩ = 140, 4/4, capo V (formes Am), **56 mesures réparties en 10 sections** (Intro, Couplet 1, Pré-refrain, Refrain, Couplet 2, Pré-refrain (2), Refrain (2), Explication (pont), Refrain final, Conclusion).
 
+**Contrat de thème (portail « Formation Musicale »).** L'app est *theme-ready* sans être forkée. Toutes les variables de couleur du thème papier (`--paper`, `--paper-2`, `--panel`, `--card`, `--card-hi`, `--ink`, `--ink-soft`, `--ink-faint`, `--pencil`, `--pencil-soft`, `--charcoal`, `--line`, `--line-soft`) sont recâblées en **repli** : `var(--fm-x, <valeur d'origine>)`. Sans thème, le rendu papier d'origine est **strictement préservé** (le repli s'applique) ; avec un thème, les jetons partagés `--fm-*` prennent le dessus. Un **chargeur** synchrone dans le `<head>` (après le `<style>`) résout le thème dans l'ordre `?theme=clair|sombre` → `localStorage['fm-theme']` (partagé avec le portail, même origine) → défaut, pose `data-fm-theme` sur `<html>`, et accepte un thème externe via `?themeUrl=/portal-theme-tokens.css` ; repli try/catch silencieux. Le champ d'accord (jadis fond `#fff` codé en dur) passe sur `--card-hi` (sinon texte illisible en thème sombre). **Volontairement laissés intacts** : les polices serif (`--serif`/`--display`, identité de l'app) et la « feuille » imprimable blanc/noir (fac-similé papier, correct dans tous les thèmes).
+
 ## Journal de développement
+
+### 2026-07-03 — theme-ready : adoption du thème du portail (clair/sombre)
+- **Contrat de thème `--fm-*` par repli.** Toutes les couleurs du thème papier sont recâblées en `var(--fm-x, <valeur d'origine>)` : sans thème, rendu papier identique (fallback) ; avec thème (clair/sombre du portail), les jetons `--fm-*` s'appliquent.
+- **Chargeur de thème** synchrone ajouté dans le `<head>` : `?theme=clair|sombre` → `localStorage['fm-theme']` → défaut ; pose `data-fm-theme` sur `<html>` (pas de flash) ; thème externe optionnel via `?themeUrl=`. Repli try/catch silencieux.
+- **Correctif contraste** : le champ d'accord (fond `#fff` codé en dur) passe sur `--card-hi`, sinon son texte devenait illisible en thème sombre.
+- **Choix assumés** : polices serif (`--serif`/`--display`) **inchangées** (identité de l'app) ; « feuille » imprimable blanc/noir conservée (fac-similé papier).
+- **Inchangé (compatibilité totale)** : moteur de parsing, tokens `{…}`/`{r:…}`, bibliothèque FWB, module impression, exports JSON/texte, clés `aziza_decoupe_v3` / `aziza_set_v1` / `aziza_wiz_v1`.
+- Validé au rendu headless dans les trois états (défaut, `?theme=clair`, `?theme=sombre`), modale du wizard comprise.
 
 ### 2026-07-02 — v2 : refonte de l'interface (design, ergonomie, aide intégrée)
 - **Design.** Thème « papier raffiné » : même identité papier/crayon mais professionnalisée — jetons de design (rayons, ombres `--sh-1/2/3`), contrôles segmentés en pilules avec état actif en relief, boutons avec hiérarchie claire (primaire dégradé, fantômes), cartes de mesure avec ombre douce, en-tête avec pictogramme 𝄞, favicon.
